@@ -50,7 +50,7 @@ export type DetectActiveHashOptions = {
 export const useDetectActiveHash = ({
   pageUrl,
   linkHashes,
-  noDeadHashZonePercentage = 0,
+  noDeadHashZonePercentage = 0.2,
 }: DetectActiveHashOptions) => {
   const [currentHash, setCurrentHash] = useState<string | null>(null);
   const debouncedHistoryReplaceState = useThrottle(historyReplaceState, 60);
