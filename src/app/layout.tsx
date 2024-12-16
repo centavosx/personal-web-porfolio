@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
+import { Open_Sans, Montserrat, Raleway } from "next/font/google";
+import SpaceBackground from "@/components/SpaceBackground";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const montserrat = Montserrat({
+  weight: "variable",
+  variable: "--montserrat",
+  subsets: ["latin"],
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const raleway = Raleway({
+  weight: "variable",
+  variable: "--raleway",
+  subsets: ["latin"],
+});
+
+const openSans = Open_Sans({
+  weight: "variable",
+  variable: "--open-sans",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -26,9 +34,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${montserrat.variable} ${raleway.variable} ${openSans.variable}  antialiased`}
       >
-        {children}
+        <main className="overflow-hidden relative">
+          <SpaceBackground />
+          {children}
+        </main>
       </body>
     </html>
   );
