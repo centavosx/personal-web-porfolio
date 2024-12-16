@@ -10,8 +10,6 @@ export class Space {
   mouseX = -100;
   mouseY = -100;
 
-  scrollTop = 0;
-
   stars: Star[] = [];
 
   constructor(public context: CanvasRenderingContext2D) {}
@@ -59,7 +57,6 @@ export class Space {
       star.move(
         this.mouseX,
         this.mouseY,
-        this.scrollTop,
         this.blackHoleRadiusMultiplier,
         this.blackHoleCount >= this.maxStarCountInBlackhole,
         () => {
@@ -91,10 +88,5 @@ export class Space {
     }
 
     this.stars = newStars;
-  }
-
-  updateScroll(scrollY: number) {
-    this.scrollTop = scrollY;
-    this.blackHoleCount = 0;
   }
 }

@@ -36,7 +36,7 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${raleway.variable} ${openSans.variable}  antialiased`}
       >
-        <main className="overflow-hidden relative">
+        <main className="overflow-hidden relative bg-black">
           <SpaceBackground />
           {children}
         </main>

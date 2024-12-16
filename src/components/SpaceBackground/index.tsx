@@ -19,11 +19,6 @@ const SpaceBackground = () => {
 
     const space = new Space(context);
 
-    const updateScroll = () => {
-      const { y = 0 } = ref.current?.getBoundingClientRect() || {};
-      space.updateScroll(y);
-    };
-
     const createStars = () => {
       if (!ref.current) return;
 
@@ -34,7 +29,6 @@ const SpaceBackground = () => {
       canvas.height = currentHeight;
 
       space.generateStars(currentHeight, currentWidth);
-      updateScroll();
     };
 
     const updateCursor = (e: MouseEvent) => {
@@ -76,13 +70,11 @@ const SpaceBackground = () => {
     render();
 
     window.addEventListener("resize", createStars);
-    window.addEventListener("scroll", updateScroll);
     window.addEventListener("mousemove", updateCursor);
     window.addEventListener("mousedown", updateDistance(true));
     window.addEventListener("mouseup", updateDistance(false));
     return () => {
       window.removeEventListener("resize", createStars);
-      window.removeEventListener("scroll", updateScroll);
       window.removeEventListener("mousemove", updateCursor);
       window.removeEventListener("mousedown", updateDistance(true));
       window.removeEventListener("mouseup", updateDistance(false));
@@ -93,9 +85,7 @@ const SpaceBackground = () => {
     };
   }, []);
 
-  return (
-    <div ref={ref} className="absolute h-full w-full m-0 p-0 xl -z-10"></div>
-  );
+  return <div ref={ref} className="fixed h-full w-full m-0 p-0 xl"></div>;
 };
 
 export default SpaceBackground;

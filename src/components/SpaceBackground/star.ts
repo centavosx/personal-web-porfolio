@@ -28,8 +28,6 @@ export class Star {
   posY = 0;
   opacity = 0.4;
 
-  oldScrollTop = 0;
-
   isInBlackHole = false;
 
   constructor(
@@ -70,7 +68,6 @@ export class Star {
   move(
     mouseX: number,
     mouseY: number,
-    scrollTopPos: number,
     blackHoleRadiusMultiplier = 1,
     hasMeetMax = false,
     onAddInBlackHole: () => void,
@@ -79,12 +76,11 @@ export class Star {
     this.alpha += this.speed;
     this.posX = this.x + this.radX * Math.cos((this.alpha / 180) * Math.PI);
     this.posY =
-      this.y -
-      scrollTopPos +
+      this.y +
       blackHoleRadiusMultiplier +
       this.radY * Math.sin((this.alpha / 180) * Math.PI);
 
-    const currentMouseY = mouseY - scrollTopPos + blackHoleRadiusMultiplier;
+    const currentMouseY = mouseY + blackHoleRadiusMultiplier;
 
     const mouseDrawX = this.posX - mouseX;
     const mouseDrawY = this.posY - currentMouseY;
@@ -98,9 +94,7 @@ export class Star {
     const hasMeetBlackHoleRequirememnts =
       (hasMeetMax && this.isInBlackHole) || !hasMeetMax;
 
-    this.oldScrollTop = scrollTopPos;
-
-    if (radius < maxBlackholeRadius * 2 && this.oldScrollTop === scrollTopPos) {
+    if (radius < maxBlackholeRadius * 2) {
       this.opacity = 0;
       if (!hasMeetBlackHoleRequirememnts) return;
 
