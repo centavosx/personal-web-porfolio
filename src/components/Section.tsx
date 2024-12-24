@@ -6,7 +6,7 @@ import {
   Ref,
 } from "react";
 import { extendClassByProp } from "@/utils/extendClassByProp";
-import Text from "./Text";
+import Text, { TextProps } from "./Text";
 import Button, { ButtonProps } from "./Button";
 
 export type SectionProps = PropsWithChildren<
@@ -20,7 +20,9 @@ export type SectionProps = PropsWithChildren<
     withBgOverlay?: boolean;
     isDark?: boolean;
     titleContainerProps?: HTMLAttributes<HTMLElement>;
+    titleProps?: TextProps<"h1">;
     descriptionContainerProps?: HTMLAttributes<HTMLElement>;
+    descriptionProps?: TextProps<"p">;
     moreButton?: {
       hidden?: boolean;
     } & Omit<ButtonProps, "className">;
@@ -40,6 +42,8 @@ const Section = forwardRef(
       isDark,
       titleContainerProps,
       descriptionContainerProps,
+      titleProps,
+      descriptionProps,
       moreButton,
       id,
       ...rest
@@ -80,6 +84,7 @@ const Section = forwardRef(
                   className="font-montserrat font-bold tracking-[0.25em] uppercase mb-6"
                   as="h1"
                   size="lg"
+                  {...titleProps}
                 >
                   {title}
                 </Text>
@@ -92,7 +97,9 @@ const Section = forwardRef(
                   "flex relative flex-col gap-8"
                 )}
               >
-                <Text className="font-light">{description}</Text>
+                <Text className="font-light" {...descriptionProps}>
+                  {description}
+                </Text>
                 {!hidden && (
                   <Button className="w-20" variant="outlined" {...buttonRest}>
                     More

@@ -1,74 +1,115 @@
 "use client";
 
+import Button from "@/components/Button";
 import Section from "@/components/Section";
+import Text from "@/components/Text";
+import { companies } from "@/content/companies";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-
-const MOCK_COMPANY_DATA = [
-  {
-    title: "Trend Micro",
-    description:
-      "Trend Micro, a global cybersecurity leader, helps make the world safe for exchanging digital information. Fueled by decades of security expertise, global threat research, and continuous innovation, our cybersecurity platform protects 500,000+ organizations and 250+ million individuals across clouds, networks, devices, and endpoints.",
-    iconSrc: "/svg/company/trend-micro.svg",
-  },
-  {
-    title: "ISBX",
-    description:
-      "ISBX work with clients to strategize and build world-class applications for web and mobile. Their design and development teams function in unison to deliver world class results that customers love.",
-    iconSrc: "/svg/company/isbx.svg",
-  },
-];
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const Companies = () => {
+  const [isChanging, setIsChanging] = useState(false);
+  const timeoutIdRef = useRef<NodeJS.Timeout>(undefined);
+  const intervalIdRef = useRef<NodeJS.Timeout>(undefined);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentData = MOCK_COMPANY_DATA[currentIndex];
+  const {
+    id = "",
+    icon = "",
+    description = "",
+    title = "",
+  } = companies[currentIndex] || {};
+
+  const handleChangeItem = useCallback((isPrev?: boolean) => {
+    setIsChanging(true);
+
+    if (timeoutIdRef.current !== undefined) clearTimeout(timeoutIdRef.current);
+
+    sectionRef.current?.classList.add("animate-pulse-full");
+
+    timeoutIdRef.current = setTimeout(() => {
+      setCurrentIndex((currentIndex) => {
+        const lastIndex = companies.length - 1;
+        if (isPrev) return currentIndex > 0 ? currentIndex - 1 : lastIndex;
+        return currentIndex < lastIndex ? currentIndex + 1 : 0;
+      });
+
+      timeoutIdRef.current = setTimeout(() => {
+        sectionRef.current?.classList.remove("animate-pulse-full");
+        setIsChanging(false);
+      }, 600);
+    }, 400);
+  }, []);
+
+  const handleRestartInterval = useCallback(() => {
+    if (timeoutIdRef.current !== undefined)
+      clearInterval(intervalIdRef.current);
+    intervalIdRef.current = setInterval(() => {
+      handleChangeItem();
+    }, 8000);
+  }, [handleChangeItem]);
+
+  const handleChangeIndex = (isPrev?: boolean) => () => {
+    handleRestartInterval();
+    handleChangeItem(isPrev);
+  };
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-
-    const intervalId = setInterval(() => {
-      if (timeoutId !== undefined) clearTimeout(timeoutId);
-
-      sectionRef.current?.classList.add("animate-pulse-full");
-
-      timeoutId = setTimeout(() => {
-        setCurrentIndex((currentIndex) =>
-          currentIndex < MOCK_COMPANY_DATA.length - 1 ? currentIndex + 1 : 0
-        );
-        timeoutId = setTimeout(() => {
-          sectionRef.current?.classList.remove("animate-pulse-full");
-        }, 600);
-      }, 400);
-    }, 8000);
+    handleRestartInterval();
     return () => {
-      clearInterval(intervalId);
-      if (timeoutId !== undefined) clearTimeout(timeoutId);
+      clearInterval(intervalIdRef.current);
+      if (timeoutIdRef.current !== undefined)
+        clearTimeout(timeoutIdRef.current);
     };
-  }, []);
+  }, [handleRestartInterval]);
+
+  const shortDescription = (
+    typeof description === "string" ? [description] : description
+  )[0];
 
   return (
     <Section
+      id="work-experience"
       ref={sectionRef}
       withPadding={false}
       isDark
       className={`px-10 relative overflow-hidden animate-once animate-ease-in-out`}
-      title={currentData.title}
+      title={title}
       titleContainerProps={{
         className: "pt-10",
-      }}
-      description={currentData.description}
-      descriptionContainerProps={{
-        className: "pb-10 md:pr-[24rem]",
       }}
     >
       <Image
         className="scale-[4.5] absolute md:right-[8rem] top-[35%] opacity-20 -z-10 self-center"
-        src={currentData.iconSrc}
+        src={icon}
         width={65}
         height={51}
         alt="company-logo"
       />
+      <div className="pb-10 md:pr-[24rem] gap-6 flex flex-col">
+        <Text className="font-light">{shortDescription}</Text>
+        <div className="flex flex-col justify-between sm:flex-row gap-8">
+          <Button className="w-20" variant="outlined" href={`/company/${id}`}>
+            More
+          </Button>
+          <div className="flex flex-row gap-2 sm:gap-4">
+            <Button
+              variant="transparent"
+              onClick={handleChangeIndex(true)}
+              disabled={isChanging}
+            >
+              Prev
+            </Button>
+            <Button
+              variant="transparent"
+              onClick={handleChangeIndex(false)}
+              disabled={isChanging}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      </div>
     </Section>
   );
 };

@@ -5,13 +5,16 @@ import AboutMe from "./_sections/AboutMe";
 import CoreTech from "./_sections/CoreTech";
 import Projects from "./_sections/Projects";
 import Companies from "./_sections/Companies";
-import OtherTechnologies from "./_sections/OtherTechnologies";
 import Footer from "./_sections/Footer";
 
 const links = [
   {
     text: "About Me",
     href: "#about",
+  },
+  {
+    text: "Work Experience",
+    href: "#work-experience",
   },
   {
     text: "Technologies",
@@ -31,7 +34,6 @@ export default function Home() {
       <AboutMe />
       <Companies />
       <CoreTech />
-      <OtherTechnologies />
       <Projects />
       <Footer />
     </>

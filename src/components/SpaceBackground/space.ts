@@ -17,7 +17,7 @@ export class Space {
   getMaxDistance() {
     if (this.width < 480) return 30;
     if (this.width < 1280) return 50;
-    return 80;
+    return 60;
   }
 
   getNumberOfStars() {

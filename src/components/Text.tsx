@@ -9,6 +9,8 @@ import {
   forwardRef,
   memo,
   AnchorHTMLAttributes,
+  LiHTMLAttributes,
+  LabelHTMLAttributes,
 } from "react";
 
 const textColorClass = {
@@ -26,6 +28,8 @@ const textSizes = {
   xxl: "text-5xl md:text-7xl",
 };
 
+export type TextSize = keyof typeof textSizes;
+
 export type TextVariantsElements = Record<
   "h1" | "h2" | "h3" | "h4" | "h5" | "h6",
   HTMLHeadingElement
@@ -34,19 +38,25 @@ export type TextVariantsElements = Record<
   span: HTMLSpanElement;
   caption: HTMLElement;
   a: HTMLAnchorElement;
+  li: HTMLLIElement;
+  label: HTMLLabelElement;
 };
 
 export type TextElementProps<
   El extends TextVariantsElements[keyof TextVariantsElements]
 > = El extends HTMLAnchorElement
   ? AnchorHTMLAttributes<El>
+  : El extends HTMLLIElement
+  ? LiHTMLAttributes<El>
+  : El extends HTMLLabelElement
+  ? LabelHTMLAttributes<El>
   : HTMLAttributes<El>;
 
 export type TextProps<K extends keyof TextVariantsElements> = PropsWithChildren<
   {
     as?: K;
     color?: keyof typeof textColorClass;
-    size?: keyof typeof textSizes;
+    size?: TextSize;
   } & TextElementProps<TextVariantsElements[K]>
 >;
 const Text = <K extends keyof TextVariantsElements = "p">(

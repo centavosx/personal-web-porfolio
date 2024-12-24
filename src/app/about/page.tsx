@@ -82,7 +82,7 @@ const About = () => {
       </Section>
       <Section
         id="mission-and-vision"
-        title="Mission and Vision"
+        title="Goals"
         className="pt-10 pb-20 px-10"
         withPadding={false}
       >
