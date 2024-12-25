@@ -16,53 +16,49 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
   const imageEls = useRef<HTMLDivElement[]>([]);
   const orderedEls = useRef<HTMLDivElement[]>([]);
 
-  const handleChangeIndex = useCallback(
-    (index: number) => () => {
-      startImageLoop();
-      const currentElements = imageEls.current;
-      const currentOrderedEls = orderedEls.current;
+  const handleChangeIndex = useCallback((index: number) => {
+    const currentElements = imageEls.current;
+    const currentOrderedEls = orderedEls.current;
 
-      const lastIndex = currentElements.length - 1;
-      const firstEl = currentOrderedEls[0];
+    const lastIndex = currentElements.length - 1;
+    const firstEl = currentOrderedEls[0];
 
-      if (index > lastIndex || !firstEl) return;
+    if (index > lastIndex || !firstEl) return;
 
-      const selectedEl = currentElements[index];
+    const selectedEl = currentElements[index];
 
-      const selectedElClasses = selectedEl.className;
+    const selectedElClasses = selectedEl.className;
 
-      const firstElClasses = firstEl.className;
-      const lastElClasses = currentOrderedEls[lastIndex].className;
+    const firstElClasses = firstEl.className;
+    const lastElClasses = currentOrderedEls[lastIndex].className;
 
-      const currentIndexInOrdered = currentOrderedEls.findIndex((value) =>
-        value.isSameNode(selectedEl)
-      );
+    const currentIndexInOrdered = currentOrderedEls.findIndex((value) =>
+      value.isSameNode(selectedEl)
+    );
 
-      if (currentIndexInOrdered < 1) return;
+    if (currentIndexInOrdered < 1) return;
 
-      let iterator = currentIndexInOrdered + 1;
+    let iterator = currentIndexInOrdered + 1;
 
-      let tempClasses = selectedElClasses;
-      let nextEl = currentOrderedEls[iterator];
+    let tempClasses = selectedElClasses;
+    let nextEl = currentOrderedEls[iterator];
 
-      while (nextEl) {
-        orderedEls.current[iterator - 1] = nextEl;
+    while (nextEl) {
+      orderedEls.current[iterator - 1] = nextEl;
 
-        const currentClass = nextEl.className;
-        nextEl.className = tempClasses;
-        tempClasses = currentClass;
+      const currentClass = nextEl.className;
+      nextEl.className = tempClasses;
+      tempClasses = currentClass;
 
-        nextEl = currentOrderedEls[++iterator];
-      }
+      nextEl = currentOrderedEls[++iterator];
+    }
 
-      selectedEl.className = firstElClasses;
-      orderedEls.current[0] = selectedEl;
+    selectedEl.className = firstElClasses;
+    orderedEls.current[0] = selectedEl;
 
-      firstEl.className = lastElClasses;
-      orderedEls.current[currentElements.length - 1] = firstEl;
-    },
-    []
-  );
+    firstEl.className = lastElClasses;
+    orderedEls.current[currentElements.length - 1] = firstEl;
+  }, []);
 
   const startImageLoop = useCallback(() => {
     if (intervalIdRef.current !== null) clearInterval(intervalIdRef.current);
@@ -74,14 +70,19 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
       const index = imageEls.current.findIndex((value) =>
         value.isSameNode(currentOrderedEls[1])
       );
-      handleChangeIndex(index)();
+      handleChangeIndex(index);
     }, 4000);
-  }, []);
+  }, [handleChangeIndex]);
+
+  const handleClick = (index: number) => () => {
+    startImageLoop();
+    handleChangeIndex(index);
+  };
 
   useEffect(() => {
     orderedEls.current = [...imageEls.current];
     startImageLoop();
-  }, [srcs]);
+  }, [srcs, startImageLoop]);
 
   useOnMouseMoveFollow(0.1, (x, y) => {
     if (!divRef.current) return;
@@ -119,7 +120,7 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
             "group-hover:opacity-50",
             "after:top-0 after:absolute after:rounded-md after:h-full after:w-full group-hover:after:bg-[rgba(0,0,0,0.9)] transition-all duration-300"
           )}
-          onClick={handleChangeIndex(index)}
+          onClick={handleClick(index)}
           onMouseEnter={() => {
             if (intervalIdRef.current !== null)
               clearInterval(intervalIdRef.current);
