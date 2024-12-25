@@ -122,7 +122,7 @@ export const projects: Content[] = [
                               type: "col",
                               title: "Authentication",
                               titleTextSize: "md",
-                              data: "This feature allows users to create a new account, log in to an existing account, or continue as a guest. It ensures the user’s identity is verified through email or phone number verification, providing a secure login process. Additionally, this verification helps Eats Online track user activities and ensure interactions are with legitimate, verified users.",
+                              data: "This feature allows users to create a new account, log in to an existing account, or continue as a guest. It ensures the user’s identity is verified through email or phone number, providing a secure login process. Additionally, this verification helps Eats Online track user activities and ensure interactions are with legitimate, verified users.",
                             },
                             {
                               type: "image-stack",
