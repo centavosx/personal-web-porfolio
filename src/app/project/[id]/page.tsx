@@ -1,12 +1,11 @@
 import Footer from "@/app/_sections/Footer";
-import Navigation, { LinkProps } from "@/components/Navigation";
+import ImageStack from "@/components/ImageStack";
+import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
-import type { ContentData } from "@/content";
-import { companies } from "@/content/companies";
+import { projects } from "@/content/projects";
 import { withContent } from "@/hoc/withContent";
 import Image from "next/image";
-import { Fragment, ReactNode } from "react";
 
 const Company = withContent<{ params: Promise<{ id: string }> }>(
   async ({ params, renderContent, sectionLinks }) => {
@@ -16,7 +15,7 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
       title = "",
       description: rawDescription,
       content,
-    } = companies.find((value) => value.id === id) || {};
+    } = projects.find((value) => value.id === id) || {};
 
     const description =
       typeof rawDescription === "string" ? [rawDescription] : rawDescription;
@@ -28,7 +27,7 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
 
     return (
       <>
-        <Navigation pageUrl={`/company/${id}`} links={sectionLinks} />
+        <Navigation pageUrl={`/project/${id}`} links={sectionLinks} />
         <Section
           containerProps={{
             className: "dark overflow-hidden md",
@@ -65,5 +64,5 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
 export default Company;
 
 export async function generateStaticParams() {
-  return companies.map((value) => ({ id: value.id }));
+  return projects.map((value) => ({ id: value.id }));
 }

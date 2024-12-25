@@ -6,3 +6,11 @@ body {
   font-family: "Open Sans";
   font-weight: 400;
 }
+
+.group .highlight:hover::after {
+  background: transparent !important;
+}
+
+.group .highlight:hover {
+  opacity: 1 !important;
+}

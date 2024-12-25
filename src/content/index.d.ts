@@ -9,7 +9,8 @@ export type ContentType =
   | "list-item"
   | "list-item-content"
   | "row"
-  | "col";
+  | "col"
+  | "image-stack";
 
 export type ContentData = {
   id?: string;
@@ -21,6 +22,9 @@ export type ContentData = {
   data: string | ContentData[] | ContentData;
   // Applicable for images only
   href?: string;
+  gap?: number;
+  // Applicable for images only
+  orientation?: "landscape" | "portrait";
 };
 
 export type Content = {

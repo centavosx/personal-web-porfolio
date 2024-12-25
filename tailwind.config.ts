@@ -7,6 +7,42 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: "class",
+  safelist: [
+    "list-disc",
+    "list-decimal",
+    "list-inside",
+    {
+      pattern: /m(x|y|b|t|l|r)-\d+/,
+      variants: ["hover"],
+    },
+    {
+      pattern: /translate-(x|y)-\d+/,
+      variants: ["hover"],
+    },
+    {
+      pattern: /gap-\d+/,
+    },
+    ...Array.from(
+      { length: 100 },
+      (_, i) =>
+        `translate-x-[${i * 20}px]
+         -translate-x-[${i * 20}px]
+         translate-y-[${i * 20}px] 
+         -translate-y-[${i * 20}px]
+        
+         hover:translate-x-[${i * 40}px]
+         hover:-translate-x-[${i * 40}px]
+         hover:translate-y-[${i * 40}px] 
+         hover:-translate-y-[${i * 40}px]
+         
+         z-[${i}]
+         -z-[${i}]
+
+         ml-[${i}rem]
+         -ml-[${i}rem]
+         `
+    ),
+  ],
   theme: {
     extend: {
       screens: {

@@ -3,8 +3,8 @@ import Text, { TextProps, TextVariantsElements } from "./Text";
 import { extendClassByProp } from "@/utils/extendClassByProp";
 
 const animationClass = {
-  spin: "animate-spin",
-  "wiggle-more": "animate-wiggle-more",
+  spin: "group-hover:animate-spin",
+  "wiggle-more": "group-hover:animate-wiggle-more",
 };
 
 export type MutedIconLabelProps<K extends keyof TextVariantsElements = "h1"> =
@@ -24,7 +24,6 @@ const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
   hoverAnimation = "spin",
   ...rest
 }: MutedIconLabelProps<K>) => {
-  // const animationClass = is;
   return (
     <div
       {...extendClassByProp(
@@ -34,7 +33,7 @@ const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
     >
       <div className="flex">
         <div
-          className={`-z-10 opacity-10 animate-duration-[1.5s] animate-none group-hover:${animationClass[hoverAnimation]} animate-infinite`}
+          className={`-z-10 opacity-10 animate-duration-[1.5s] animate-none ${animationClass[hoverAnimation]} animate-infinite`}
         >
           {mutedIcon}
         </div>
