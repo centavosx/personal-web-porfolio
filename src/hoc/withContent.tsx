@@ -13,10 +13,15 @@ export type WithContentExtendedProps = {
   ) => ReactNode;
   sectionLinks: LinkProps[];
 };
-export const withContent = <P extends {}>(
+export const withContent = <P extends Record<string, unknown>>(
   WrappedComponent: ComponentType<P & WithContentExtendedProps>
 ): ComponentType<P> => {
-  const sectionLinks: LinkProps[] = [];
+  const sectionLinks: LinkProps[] = [
+    {
+      text: "Home",
+      href: "/",
+    },
+  ];
 
   const renderContent: WithContentExtendedProps["renderContent"] = (
     key,
@@ -122,7 +127,7 @@ export const withContent = <P extends {}>(
           return (
             <Text key={key} as="li" className="font-light my-2">
               {renderListTitle()}
-              <div className={title ? "mt-4" : undefined}>{item}</div>
+              <span className={title ? "mt-4" : undefined}>{item}</span>
             </Text>
           );
         case "list-item-content":
@@ -266,7 +271,6 @@ export const withContent = <P extends {}>(
 
       return <Fragment key={key}>{childRender}</Fragment>;
     }
-    console.log(type, data);
 
     if (!Array.isArray(data))
       throw new Error("image-stack data should be an array");

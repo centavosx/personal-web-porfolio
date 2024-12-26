@@ -1,5 +1,4 @@
 import Footer from "@/app/_sections/Footer";
-import ImageStack from "@/components/ImageStack";
 import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
@@ -19,11 +18,6 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
 
     const description =
       typeof rawDescription === "string" ? [rawDescription] : rawDescription;
-
-    sectionLinks.push({
-      text: "Home",
-      href: "/",
-    });
 
     return (
       <>

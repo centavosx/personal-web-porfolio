@@ -1,12 +1,10 @@
 import Footer from "@/app/_sections/Footer";
-import Navigation, { LinkProps } from "@/components/Navigation";
+import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
-import type { ContentData } from "@/content";
 import { companies } from "@/content/companies";
 import { withContent } from "@/hoc/withContent";
 import Image from "next/image";
-import { Fragment, ReactNode } from "react";
 
 const Company = withContent<{ params: Promise<{ id: string }> }>(
   async ({ params, renderContent, sectionLinks }) => {
@@ -20,11 +18,6 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
 
     const description =
       typeof rawDescription === "string" ? [rawDescription] : rawDescription;
-
-    sectionLinks.push({
-      text: "Home",
-      href: "/",
-    });
 
     return (
       <>
