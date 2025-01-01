@@ -49,5 +49,8 @@ export type Content = {
   title: string;
   description: string | string[];
   icon: string;
+  status?: "pending" | "completed" | "hold" | "dropped";
+  date: string;
   content?: ContentData | ContentData[];
+  role?: string;
 };

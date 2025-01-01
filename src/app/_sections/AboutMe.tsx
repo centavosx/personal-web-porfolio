@@ -57,7 +57,7 @@ const AboutMe = () => {
         description="As a software developer, I don't just build applications. I focus on identifying software and real world problems, creating effective solutions, and delivering results that have a lasting impact. I am committed to continuous learning, exploring new challenges, and constantly seeking innovative ways to improve both code and user experience."
         moreButton={{ href: "/about" }}
       />
-      <Section title="What I can offer?">
+      <Section title="What I offer?">
         <div className="flex flex-row gap-8 xl:gap-24 relative justify-around flex-wrap">
           {WhatICanOffer.map((value, index) => (
             <MutedIconLabel

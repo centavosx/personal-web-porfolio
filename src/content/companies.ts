@@ -5,9 +5,11 @@ export const companies: Content[] = [
   {
     id: "1",
     title: "Trend Micro",
+    date: "February 2022 - June 2022",
     description:
       "Trend Micro, a global cybersecurity leader, helps make the world safe for exchanging digital information. Fueled by decades of security expertise, global threat research, and continuous innovation, our cybersecurity platform protects 500,000+ organizations and 250+ million individuals across clouds, networks, devices, and endpoints.",
     icon: "/svg/company/trend-micro.svg",
+    role: "Software Developer Intern",
     content: [
       {
         id: "roles-and-responsibilities",
@@ -173,11 +175,13 @@ export const companies: Content[] = [
   {
     id: "2",
     title: "ISBX",
+    date: "August 2022 - Current",
     description: [
       "ISBX work with clients to strategize and build world-class applications for web and mobile. Their design and development teams function in unison to deliver world class results that customers love.",
       "Since 2003, the ISBX team has developed numerous websites and applications for clients large and small that include automotive, consumer packaged goods, action sports, and lifestyle markets. They stand by their work and can provide a long list of references from their trusted partners.",
     ],
     icon: "/svg/company/isbx.svg",
+    role: "Full-stack Software Developer",
     content: [
       {
         id: "roles-and-responsibilities",

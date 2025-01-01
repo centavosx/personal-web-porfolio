@@ -14,6 +14,8 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
       title = "",
       description: rawDescription,
       content,
+      date,
+      role,
     } = companies.find((value) => value.id === id) || {};
 
     const description =
@@ -39,6 +41,22 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
           />
           <Text as="h1" className="font-raleway font-bold" size="xxl">
             {title}
+          </Text>
+          <Text
+            as="h2"
+            className="font-raleway font-bold"
+            size="lg"
+            color="tertiary"
+          >
+            {role}
+          </Text>
+          <Text
+            as="h3"
+            className="font-raleway font-bold"
+            size="md"
+            color="tertiary"
+          >
+            {date}
           </Text>
         </Section>
         <Section className="pt-20 pb-10 px-10" withPadding={false}>

@@ -23,7 +23,7 @@ const Footer = ({ isDark }: FooterProps) => {
           />
           <div className="flex flex-col gap-4">
             <Text className="font-montserrat" size="xs">
-              @2020 Vincent Lennuel Llanto All Rights Reserved.
+              @2025 Vincent Lennuel Llanto All Rights Reserved.
             </Text>
             <div className="flex flex-row gap-4">
               <MailIcon
