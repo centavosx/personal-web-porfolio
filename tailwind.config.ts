@@ -1,5 +1,28 @@
 import type { Config } from "tailwindcss";
 
+const GAP_SIZES = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 36, 44,
+  48, 52, 56, 60, 64, 72, 80, 96,
+];
+
+const ALIGNMENT = ["start", "center", "end"];
+
+const BREAKPOINT_SIZES = ["xsm", "sm", "md", "lg", "xl", "xxl"];
+
+const FLEX = ["flex-col", "flex-col-reverse", "flex-row", "flex-row-reverse"];
+console.log(
+  JSON.stringify(
+    BREAKPOINT_SIZES.flatMap((breakpoint) => [
+      ...GAP_SIZES.map((value) => `${breakpoint}:gap-${value}`),
+      ...FLEX.map((value) => `${breakpoint}:${value}`),
+      ...["justify", "items", "self"].flatMap((value) =>
+        ALIGNMENT.map((alignment) => `${breakpoint}:${value}-${alignment}`)
+      ),
+      `${breakpoint}:w-full`,
+      `${breakpoint}:w-auto`,
+    ])
+  )
+);
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,10 +34,8 @@ export default {
     "list-disc",
     "list-decimal",
     "list-inside",
-    {
-      pattern: /m(x|y|b|t|l|r)-\d+/,
-      variants: ["hover"],
-    },
+    "max-sm",
+    { pattern: /(ml|mr|mt|mb)-\d+/ },
     {
       pattern: /translate-(x|y)-\d+/,
       variants: ["hover"],
@@ -22,18 +43,21 @@ export default {
     {
       pattern: /gap-\d+/,
     },
+    {
+      pattern: /flex-(col|row|col-reverse|row-reverse)+/,
+    },
     ...Array.from(
-      { length: 100 },
+      { length: 10 },
       (_, i) =>
-        `translate-x-[${i * 20}px]
-         -translate-x-[${i * 20}px]
-         translate-y-[${i * 20}px] 
-         -translate-y-[${i * 20}px]
+        `translate-x-[${i * 10}px]
+         -translate-x-[${i * 10}px]
+         translate-y-[${i * 10}px] 
+         -translate-y-[${i * 10}px]
         
-         hover:translate-x-[${i * 40}px]
-         hover:-translate-x-[${i * 40}px]
-         hover:translate-y-[${i * 40}px] 
-         hover:-translate-y-[${i * 40}px]
+         hover:translate-x-[${i * 25}px]
+         hover:-translate-x-[${i * 25}px]
+         hover:translate-y-[${i * 25}px] 
+         hover:-translate-y-[${i * 25}px]
          
          z-[${i}]
          -z-[${i}]
@@ -42,6 +66,15 @@ export default {
          -ml-[${i}rem]
          `
     ),
+    ...BREAKPOINT_SIZES.flatMap((breakpoint) => [
+      ...GAP_SIZES.map((value) => `${breakpoint}:gap-${value}`),
+      ...FLEX.map((value) => `${breakpoint}:${value}`),
+      ...["justify", "items", "self"].flatMap((value) =>
+        ALIGNMENT.map((alignment) => `${breakpoint}:${value}-${alignment}`)
+      ),
+      `${breakpoint}:w-full`,
+      `${breakpoint}:w-auto`,
+    ]),
   ],
   theme: {
     extend: {

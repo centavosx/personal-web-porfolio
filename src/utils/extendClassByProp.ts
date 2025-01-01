@@ -5,6 +5,9 @@ export const extendClassByProp = (
   const classProp = prop.className;
   return {
     ...prop,
-    className: [...classes, ...(classProp ? [classProp] : [])].join(" "),
+    className: [...classes, ...(classProp ? [classProp] : [])]
+      .filter(Boolean)
+      .join(" ")
+      .trim(),
   };
 };

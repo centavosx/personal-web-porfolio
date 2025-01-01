@@ -1,6 +1,5 @@
 "use client";
 
-import { useOnMouseMoveFollow } from "@/hooks/useOnMouseMoveFollow";
 import { extendClassByProp } from "@/utils/extendClassByProp";
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
@@ -84,20 +83,8 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
     startImageLoop();
   }, [srcs, startImageLoop]);
 
-  useOnMouseMoveFollow(0.1, (x, y) => {
-    if (!divRef.current) return;
-    divRef.current.style.transform = `translate(${x}px, ${y}px)`;
-  });
-
   return (
-    <div
-      ref={divRef}
-      className="relative transition-all group"
-      style={{
-        height,
-        width,
-      }}
-    >
+    <div ref={divRef} className="relative transition-all">
       {srcs.map((src, index) => (
         <div
           ref={(r) => {
@@ -107,18 +94,14 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
           key={`img_container_${index}`}
           {...extendClassByProp(
             {},
-            "highlight",
             "rounded-md",
             index === 0 ? "relative" : "absolute",
             "transform transition-all top-0 left-0",
             `z-[${srcs.length - 1 - index}]`,
-            `translate-x-[${index * 20}px]`,
-            `-translate-y-[${index * 20}px]`,
-            index % 2 === 0 ? "rotate-12" : "-rotate-12",
-            `hover:-translate-y-[${index * 40}px]`,
-            `hover:translate-x-[${index * 40}px]`,
-            "group-hover:opacity-50",
-            "after:top-0 after:absolute after:rounded-md after:h-full after:w-full group-hover:after:bg-[rgba(0,0,0,0.9)] transition-all duration-300"
+            `translate-x-[${index * 10}px]`,
+            `-translate-y-[${index * 10}px]`,
+            `hover:-translate-y-[${index * 25}px]`,
+            "after:top-0 after:absolute after:rounded-md after:h-full after:w-full transition-all duration-300"
           )}
           onClick={handleClick(index)}
           onMouseEnter={() => {

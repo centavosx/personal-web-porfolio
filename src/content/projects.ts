@@ -6,7 +6,7 @@ export const projects: Content[] = [
     title: "Eats Online PH",
     description:
       "Eats Online PH is an e-commerce application developed to provide a platform for selling a variety of Filipino delicacies sourced from different regions of the Philippines. Originally launched during the pandemic as a small business to support local families. As demand grew, the business sought to expand its service area and reach a broader market. The solution was the development of a user-friendly application designed to showcase its products and facilitate a seamless online ordering experience for customers.",
-    icon: "/svg/company/trend-micro.svg",
+    icon: "/project/eats-online/logo.png",
     content: [
       {
         id: "overview",
@@ -98,6 +98,7 @@ export const projects: Content[] = [
           },
           {
             type: "bullet",
+            gap: 24,
             data: [
               {
                 title: "Consumer Applications (Mobile & Web)",
@@ -107,19 +108,33 @@ export const projects: Content[] = [
                   {
                     type: "list-item-content",
                     data: {
-                      type: "col",
-                      gap: 36,
+                      type: "flex",
+                      direction: "column",
+                      gap: 12,
+                      breakpoints: {
+                        xl: {
+                          gap: 36,
+                        },
+                      },
                       data: [
                         {
                           type: "description",
                           data: "We developed responsive mobile and web platforms designed to deliver a seamless user experience across all devices. The core features implemented include:",
                         },
                         {
-                          type: "row",
-                          gap: 48,
+                          type: "flex",
+                          direction: "column",
+                          gap: 20,
+                          breakpoints: {
+                            xl: {
+                              direction: "row",
+                              gap: 48,
+                            },
+                          },
                           data: [
                             {
-                              type: "col",
+                              type: "flex",
+                              direction: "column",
                               title: "Authentication",
                               titleTextSize: "md",
                               data: "This feature allows users to create a new account, log in to an existing account, or continue as a guest. It ensures the user’s identity is verified through email or phone number, providing a secure registration process. Additionally, this verification helps Eats Online track user activities and ensure interactions are with legitimate, verified users.",
@@ -127,6 +142,7 @@ export const projects: Content[] = [
                             {
                               type: "image-stack",
                               size: "xs",
+                              justify: "center",
                               data: [
                                 {
                                   data: "/project/eats-online/login.jpg",
@@ -146,12 +162,20 @@ export const projects: Content[] = [
                           ],
                         },
                         {
-                          type: "row",
-                          gap: 48,
+                          type: "flex",
+                          direction: "column-reversed",
+                          gap: 20,
+                          breakpoints: {
+                            xl: {
+                              direction: "row",
+                              gap: 48,
+                            },
+                          },
                           data: [
                             {
                               type: "image-stack",
                               size: "xs",
+                              justify: "center",
                               data: [
                                 {
                                   data: "/project/eats-online/featured.jpg",
@@ -173,7 +197,8 @@ export const projects: Content[] = [
                               orientation: "landscape",
                             },
                             {
-                              type: "col",
+                              type: "flex",
+                              direction: "column",
                               title: "Products",
                               titleTextSize: "md",
                               data: "This feature provide a comprehensive list of products and categories that are updated on realtime, allowing users to browse through different options.  Users can also filter and search for products, helping them quickly find exactly what they need. Additionally, it showcases the top six featured products, selected based on the highest number of sales, and display recommended items when viewing a single product.",
@@ -181,11 +206,19 @@ export const projects: Content[] = [
                           ],
                         },
                         {
-                          type: "row",
-                          gap: 48,
+                          type: "flex",
+                          direction: "column",
+                          gap: 20,
+                          breakpoints: {
+                            xl: {
+                              direction: "row",
+                              gap: 48,
+                            },
+                          },
                           data: [
                             {
-                              type: "col",
+                              type: "flex",
+                              direction: "column",
                               title: "Cart & Checkout",
                               titleTextSize: "md",
                               data: "This feature allows users to manage their selected products, making it easy to add, remove, or modify items in the cart. Users can also proceed to the checkout, where they can choose their delivery method, payment option, and generate a transaction receipt.",
@@ -193,6 +226,7 @@ export const projects: Content[] = [
                             {
                               type: "image-stack",
                               size: "xs",
+                              justify: "center",
                               data: [
                                 {
                                   data: "/project/eats-online/cart-1.jpg",
@@ -215,10 +249,63 @@ export const projects: Content[] = [
                             },
                           ],
                         },
+                        {
+                          type: "flex",
+                          direction: "column-reversed",
+                          gap: 20,
+                          breakpoints: {
+                            xl: {
+                              direction: "row",
+                              gap: 48,
+                            },
+                          },
+                          data: [
+                            {
+                              type: "image-stack",
+                              size: "xs",
+                              justify: "center",
+                              data: [
+                                {
+                                  data: "/project/eats-online/mobile_app-1.jpg",
+                                  type: "image",
+                                },
+                                {
+                                  data: "/project/eats-online/mobile_app-2.jpg",
+                                  type: "image",
+                                },
+                                {
+                                  data: "/project/eats-online/mobile_app-3.jpg",
+                                  type: "image",
+                                },
+                                {
+                                  data: "/project/eats-online/mobile_app-4.jpg",
+                                  type: "image",
+                                },
+                              ],
+                              orientation: "portrait",
+                            },
+                            {
+                              type: "flex",
+                              direction: "column",
+                              title: "Mobile Application",
+                              titleTextSize: "md",
+                              data: "There's also a mobile application for android or ios that have the same feature as the web application.",
+                            },
+                          ],
+                        },
                       ],
                     },
                   },
                 ],
+              },
+              {
+                title: "Consumer Applications (Mobile & Web)",
+                titleTextSize: "md",
+                type: "list-item",
+                data: {
+                  type: "list-item-content",
+                  data: "One common issue with many e-commerce web applications is that products are not updated in real time, leading to delayed notifications for customers when stock is low. This often results in customers placing orders for items that are out of stock. To address this, the application will provide a real-time product updates, ensuring that customers are always informed of the current availability of products. This is particularly useful during high-demand periods, helping to prevent order discrepancies and improve overall customer experience.",
+                },
               },
             ],
           },

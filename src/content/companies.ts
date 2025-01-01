@@ -55,12 +55,14 @@ export const companies: Content[] = [
         title: "Technologies",
         type: "section",
         data: {
-          type: "col",
+          type: "flex",
+          direction: "column",
           data: [
             {
               title: "Language",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -78,7 +80,8 @@ export const companies: Content[] = [
             {
               title: "Frontend",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -91,7 +94,8 @@ export const companies: Content[] = [
             {
               title: "Backend",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -104,7 +108,8 @@ export const companies: Content[] = [
             {
               title: "DevOps / Cloud",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -129,7 +134,8 @@ export const companies: Content[] = [
             {
               title: "Documentation",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -142,7 +148,8 @@ export const companies: Content[] = [
             {
               title: "Automation",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -241,12 +248,14 @@ export const companies: Content[] = [
         title: "Technologies",
         type: "section",
         data: {
-          type: "col",
+          type: "flex",
+          direction: "column",
           data: [
             {
               title: "Languages",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -270,7 +279,8 @@ export const companies: Content[] = [
             {
               title: "Frameworks",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -307,7 +317,8 @@ export const companies: Content[] = [
             {
               title: "DevOps / Cloud",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -344,7 +355,8 @@ export const companies: Content[] = [
             {
               title: "Styling",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -375,7 +387,8 @@ export const companies: Content[] = [
             {
               title: "Documentation",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -394,7 +407,8 @@ export const companies: Content[] = [
             {
               title: "Database",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -413,7 +427,8 @@ export const companies: Content[] = [
             {
               title: "Testing",
               titleTextSize: "md",
-              type: "row",
+              type: "flex",
+              direction: "row",
               data: [
                 {
                   type: "image",
@@ -434,7 +449,8 @@ export const companies: Content[] = [
           {
             title: "Blockchain Networks",
             titleTextSize: "md",
-            type: "row",
+            type: "flex",
+            direction: "row",
             data: [
               {
                 type: "image",
@@ -489,7 +505,8 @@ export const companies: Content[] = [
           {
             title: "Libraries",
             titleTextSize: "md",
-            type: "row",
+            type: "flex",
+            direction: "row",
             data: [
               {
                 type: "image",
@@ -538,7 +555,8 @@ export const companies: Content[] = [
           {
             title: "DeFi",
             titleTextSize: "md",
-            type: "row",
+            type: "flex",
+            direction: "row",
             data: [
               {
                 type: "image",
@@ -591,10 +609,12 @@ export const companies: Content[] = [
       //                 },
       //                 {
       //                   title: "Technologies Used",
-      //                   type: "col",
+      //                     type: "flex",
+      // direction: "column",
       //                   titleTextSize: "sm",
       //                   data: {
-      //                     type: "row",
+      //                       type: "flex",
+      // direction: "row",
       //                     data: [
       //                       {
       //                         type: "description",

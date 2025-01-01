@@ -2,9 +2,132 @@ import ImageStack from "@/components/ImageStack";
 import { LinkProps } from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
-import type { ContentData } from "@/content";
+import type {
+  AlignValue,
+  ContentBreakpoints,
+  ContentData,
+  ContentType,
+  ResponsiveProps,
+} from "@/content";
+import { extendClassByProp } from "@/utils/extendClassByProp";
 import Image from "next/image";
 import { ComponentType, Fragment, ReactNode } from "react";
+
+const justifyClasses: Record<AlignValue, string> = {
+  start: "justify-start",
+  center: "justify-center",
+  end: "justify-end",
+};
+
+const alignItemsClasses: Record<AlignValue, string> = {
+  start: "items-start",
+  center: "items-center",
+  end: "items-end",
+};
+
+const selfAlignClasses: Record<AlignValue, string> = {
+  start: "self-start",
+  center: "self-center",
+  end: "self-end",
+};
+
+const flexDirectionClasses: Record<
+  "row" | "column" | "column-reversed" | "row-reversed",
+  string
+> = {
+  column: "flex-col",
+  "column-reversed": "flex-col-reverse",
+  row: "flex-row",
+  "row-reversed": "flex-row-reverse",
+};
+
+type ResponsiveClassNames = {
+  gap: string;
+  alignItemsClass?: string;
+  justifyClass?: string;
+  selfAlignClass?: string;
+  flexClassName?: string;
+  flexWidthClass?: string;
+};
+
+const generateResponsiveClassNames = (
+  type: ContentType,
+  style: ResponsiveProps,
+  currentBreakpoint: string | ContentBreakpoints
+): ResponsiveClassNames => {
+  const { gap: currentGap, justify, alignItems, selfAlign, direction } = style;
+
+  const alignItemsClass = !!alignItems
+    ? alignItemsClasses[alignItems]
+    : undefined;
+  const justifyClass = !!justify ? justifyClasses[justify] : undefined;
+  const selfAlignClass = !!selfAlign ? selfAlignClasses[selfAlign] : undefined;
+  const flexClassName = !!direction
+    ? flexDirectionClasses[direction]
+    : undefined;
+  const flexWidthClass =
+    direction === "column" || direction === "column-reversed"
+      ? "w-full"
+      : "w-auto";
+
+  let gap = `gap-${currentGap ?? 8}`;
+
+  switch (type) {
+    case "bullet":
+    case "numeric":
+      gap = `gap-${currentGap ?? 1}`;
+      break;
+  }
+
+  let data: ResponsiveClassNames = {
+    gap,
+    alignItemsClass,
+    justifyClass,
+    selfAlignClass,
+    flexClassName,
+    flexWidthClass,
+  };
+
+  if (typeof currentBreakpoint === "string")
+    return Object.keys(data).reduce((accumulator, key) => {
+      const currentKey = key as keyof typeof data;
+      const currentDataKeyValue = data[currentKey];
+      accumulator[currentKey] = !!currentDataKeyValue
+        ? `${currentBreakpoint}:${currentDataKeyValue}`
+        : undefined!;
+      return accumulator;
+    }, {} as typeof data);
+
+  for (const key of Object.keys(currentBreakpoint)) {
+    const currentBreakpointData =
+      currentBreakpoint[key as keyof ContentBreakpoints];
+
+    if (!currentBreakpointData) continue;
+
+    const breakpointClasses = generateResponsiveClassNames(
+      type,
+      currentBreakpointData,
+      key
+    );
+
+    data = Object.keys(data).reduce((accumulator, key) => {
+      const currentKey = key as keyof typeof data;
+      let currentDataKeyValue = data[currentKey];
+      const breakpointClassValue = breakpointClasses[currentKey];
+
+      if (!!breakpointClassValue) {
+        currentDataKeyValue = `${
+          !!currentDataKeyValue ? `${currentDataKeyValue} ` : ""
+        }${breakpointClassValue}`;
+      }
+
+      accumulator[currentKey] = currentDataKeyValue!;
+      return accumulator;
+    }, {} as typeof data);
+  }
+
+  return data;
+};
 
 export type WithContentExtendedProps = {
   renderContent: (
@@ -44,13 +167,29 @@ export const withContent = <P extends Record<string, unknown>>(
       textClassName = "font-light",
       href,
       id,
-      gap,
       orientation,
+      breakpoints = {},
     } = content;
+
+    const {
+      alignItemsClass,
+      justifyClass,
+      selfAlignClass,
+      flexClassName,
+      gap: gapClass,
+      flexWidthClass,
+    } = generateResponsiveClassNames(type, content, breakpoints);
+
+    const combinedAlignClasses = extendClassByProp(
+      {},
+      justifyClass || "",
+      alignItemsClass || "",
+      selfAlignClass || ""
+    ).className;
 
     const isDataString = typeof data === "string";
 
-    if (type !== "image" && type !== "image-stack") {
+    if (!["image-stack", "image"].includes(type)) {
       const item = isDataString ? (
         <Text
           className={textClassName}
@@ -105,7 +244,13 @@ export const withContent = <P extends Record<string, unknown>>(
           return (
             <ul
               key={key}
-              className={`list-disc list-inside flex flex-col gap-${gap ?? 1}`}
+              {...extendClassByProp(
+                {},
+                "list-inside flex flex-col",
+                "list-disc",
+                gapClass,
+                combinedAlignClasses
+              )}
             >
               {renderListTitle()}
               {item}
@@ -115,9 +260,13 @@ export const withContent = <P extends Record<string, unknown>>(
           return (
             <ol
               key={key}
-              className={`list-decimal list-inside flex flex-col gap-${
-                gap ?? 1
-              }`}
+              {...extendClassByProp(
+                {},
+                "list-inside flex flex-col",
+                "list-decimal",
+                gapClass,
+                combinedAlignClasses
+              )}
             >
               {renderListTitle()}
               {item}
@@ -132,35 +281,42 @@ export const withContent = <P extends Record<string, unknown>>(
           );
         case "list-item-content":
           return (
-            <div key={key} className="ml-[1rem] gap-8 flex flex-col my-1">
+            <div
+              key={key}
+              {...extendClassByProp(
+                {},
+                "ml-5 gap-8 flex flex-col my-1 mt-4",
+                combinedAlignClasses
+              )}
+            >
               {item}
             </div>
           );
-        case "row":
+        case "flex":
           return (
-            <div key={key} className="flex flex-col flex-1">
+            <div
+              key={key}
+              {...extendClassByProp(
+                {},
+                "flex flex-col flex-1",
+                selfAlignClass || "",
+                flexWidthClass || ""
+              )}
+            >
               {renderListTitle()}
               <div
-                className={`flex flex-row gap-${
-                  gap ?? 8
-                } flex-wrap items-center`}
+                {...extendClassByProp(
+                  {},
+                  `flex ${gapClass} ${flexClassName} flex-wrap`,
+                  justifyClass || "",
+                  alignItemsClass || ""
+                )}
               >
                 {item}
               </div>
             </div>
           );
-        case "col":
-          return (
-            <div key={key} className="flex flex-col flex-1">
-              {renderListTitle()}
-              <div
-                key={key}
-                className={`flex flex-col gap-${gap ?? 8} flex-wrap flex-1`}
-              >
-                {item}
-              </div>
-            </div>
-          );
+
         default:
           return <Fragment key={key}>{item}</Fragment>;
       }
@@ -205,28 +361,28 @@ export const withContent = <P extends Record<string, unknown>>(
       case "portrait":
         const portraitSizes = {
           xs: {
-            height: 400,
-            width: 300,
+            height: 200,
+            width: 150,
           },
           sm: {
+            height: 256,
+            width: 192,
+          },
+          md: {
+            height: 320,
+            width: 240,
+          },
+          lg: {
+            height: 384,
+            width: 288,
+          },
+          xl: {
             height: 512,
             width: 384,
           },
-          md: {
+          xxl: {
             height: 640,
             width: 480,
-          },
-          lg: {
-            height: 768,
-            width: 576,
-          },
-          xl: {
-            height: 1024,
-            width: 768,
-          },
-          xxl: {
-            height: 1280,
-            width: 960,
           },
         };
         const currentPortraitSize = portraitSizes[size];
@@ -254,7 +410,12 @@ export const withContent = <P extends Record<string, unknown>>(
 
       const childRender = (
         <Image
-          className="object-contain"
+          key={key}
+          {...extendClassByProp(
+            {},
+            "object-contain rounded-md",
+            combinedAlignClasses
+          )}
           src={data}
           alt="image"
           height={height}
@@ -276,20 +437,24 @@ export const withContent = <P extends Record<string, unknown>>(
       throw new Error("image-stack data should be an array");
 
     return (
-      <ImageStack
+      <div
         key={key}
-        srcs={data.map((item) => {
-          if (item.type !== "image")
-            throw new Error("image-stack items should be an image type");
-          const itemData = item.data;
-          if (typeof itemData !== "string") {
-            throw new Error("image-stack item data should be a string path!");
-          }
-          return itemData;
-        })}
-        height={height}
-        width={width}
-      />
+        {...extendClassByProp({}, "flex-1 flex", combinedAlignClasses)}
+      >
+        <ImageStack
+          srcs={data.map((item) => {
+            if (item.type !== "image")
+              throw new Error("image-stack items should be an image type");
+            const itemData = item.data;
+            if (typeof itemData !== "string") {
+              throw new Error("image-stack item data should be a string path!");
+            }
+            return itemData;
+          })}
+          height={height}
+          width={width}
+        />
+      </div>
     );
   };
 

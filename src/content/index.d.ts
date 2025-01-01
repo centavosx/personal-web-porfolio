@@ -8,24 +8,41 @@ export type ContentType =
   | "numeric"
   | "list-item"
   | "list-item-content"
-  | "row"
-  | "col"
+  | "flex"
   | "image-stack";
+
+export type AlignValue = "start" | "center" | "end";
+
+export type ResponsiveProps = {
+  direction?: "row" | "column" | "row-reversed" | "column-reversed";
+  gap?: number;
+  justify?: AlignValue;
+  alignItems?: AlignValue;
+  selfAlign?: AlignValue;
+};
+
+export type ContentStyleProps = {
+  textClassName?: string;
+  titleTextSize?: TextSize;
+  size?: TextSize;
+} & ResponsiveProps;
+
+export type ContentBreakpoints = Partial<
+  Record<"xsm" | "sm" | "md" | "lg" | "xl" | "xxl", ResponsiveProps>
+>;
 
 export type ContentData = {
   id?: string;
   title?: string;
   type: ContentType;
-  size?: TextSize;
-  textClassName?: string;
-  titleTextSize?: TextSize;
+
   data: string | ContentData[] | ContentData;
   // Applicable for images only
   href?: string;
-  gap?: number;
   // Applicable for images only
   orientation?: "landscape" | "portrait";
-};
+  breakpoints?: ContentBreakpoints;
+} & ContentStyleProps;
 
 export type Content = {
   id: string;
