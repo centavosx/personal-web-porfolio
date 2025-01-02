@@ -4,8 +4,10 @@ import Hero from "./_sections/Hero";
 import AboutMe from "./_sections/AboutMe";
 import CoreTech from "./_sections/CoreTech";
 import Projects from "./_sections/Projects";
-import Companies from "./_sections/Companies";
+import WorkExperience from "./_sections/WorkExperience";
 import Footer from "./_sections/Footer";
+import { Content } from "@/types/supabase";
+import { getContents } from "../utils/supabase";
 
 const links = [
   {
@@ -26,16 +28,31 @@ const links = [
   },
 ];
 
-export default function Home() {
+const Home = async () => {
+  const data = await getContents();
+
+  let workExperiences: Content[] = [];
+  let projects: Content[] = [];
+
+  data.forEach((value) => {
+    if (value.type === "work-experience") {
+      workExperiences.push(value);
+      return;
+    }
+    projects.push(value);
+  });
+
   return (
     <>
       <Navigation links={links} />
       <Hero />
       <AboutMe />
-      <Companies />
+      <WorkExperience data={workExperiences} />
       <CoreTech />
-      <Projects />
+      <Projects data={projects} />
       <Footer />
     </>
   );
-}
+};
+
+export default Home;

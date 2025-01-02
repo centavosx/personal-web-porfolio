@@ -2,24 +2,16 @@ import Footer from "@/app/_sections/Footer";
 import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
-import { projects } from "@/content/projects";
 import { withContent } from "@/hoc/withContent";
+import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
+import { getContentIdsByType, getContentById } from "@/utils/supabase";
 import Image from "next/image";
 
-const Company = withContent<{ params: Promise<{ id: string }> }>(
+const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(
   async ({ params, renderContent, sectionLinks }) => {
     const id = (await params).id;
-    const {
-      icon = "",
-      title = "",
-      description: rawDescription,
-      content,
-      status,
-      date,
-    } = projects.find((value) => value.id === id) || {};
-
-    const description =
-      typeof rawDescription === "string" ? [rawDescription] : rawDescription;
+    const { icon_url, name, description, content, status, date } =
+      await getContentById(id);
 
     return (
       <>
@@ -32,24 +24,28 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
           isDark
           isTransparentBg
         >
-          <Image
-            className="scale-[4.5] absolute md:right-[8rem] top-[35%] opacity-20 -z-10 self-center bottom-10"
-            src={icon}
-            width={65}
-            height={51}
-            alt="company-logo"
-          />
+          {!!icon_url && (
+            <Image
+              className="scale-[4.5] absolute md:right-[8rem] top-[35%] opacity-20 -z-10 self-center bottom-10"
+              src={getImageUrlFromExternal(icon_url)}
+              width={65}
+              height={51}
+              alt="company-logo"
+            />
+          )}
           <Text as="h1" className="font-raleway font-bold" size="xxl">
-            {title}
+            {name}
           </Text>
-          <Text
-            as="h2"
-            className="font-raleway font-bold"
-            size="lg"
-            color="tertiary"
-          >
-            {date}
-          </Text>
+          {!!date && (
+            <Text
+              as="h2"
+              className="font-raleway font-bold"
+              size="lg"
+              color="tertiary"
+            >
+              {date}
+            </Text>
+          )}
           <Text
             as="h3"
             className="font-raleway font-bold uppercase"
@@ -73,8 +69,9 @@ const Company = withContent<{ params: Promise<{ id: string }> }>(
   }
 );
 
-export default Company;
+export default WorkExperience;
 
 export async function generateStaticParams() {
-  return projects.map((value) => ({ id: value.id }));
+  const contentIds = await getContentIdsByType("project");
+  return contentIds;
 }

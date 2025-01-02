@@ -8,8 +8,9 @@ import type {
   ContentData,
   ContentType,
   ResponsiveProps,
-} from "@/content";
+} from "@/types/content";
 import { extendClassByProp } from "@/utils/extendClassByProp";
+import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Image from "next/image";
 import { ComponentType, Fragment, ReactNode } from "react";
 
@@ -169,6 +170,7 @@ export const withContent = <P extends Record<string, unknown>>(
       id,
       orientation,
       breakpoints = {},
+      isExternal,
     } = content;
 
     const {
@@ -407,6 +409,11 @@ export const withContent = <P extends Record<string, unknown>>(
     if (type === "image") {
       if (!isDataString)
         throw new Error("Data should be a string for image type");
+      let imageSrc = data;
+
+      if (isExternal) {
+        imageSrc = getImageUrlFromExternal(imageSrc);
+      }
 
       const childRender = (
         <Image
@@ -416,7 +423,7 @@ export const withContent = <P extends Record<string, unknown>>(
             "object-contain rounded-md",
             combinedAlignClasses
           )}
-          src={data}
+          src={imageSrc}
           alt="image"
           height={height}
           width={width}
@@ -449,7 +456,14 @@ export const withContent = <P extends Record<string, unknown>>(
             if (typeof itemData !== "string") {
               throw new Error("image-stack item data should be a string path!");
             }
-            return itemData;
+
+            let imageSrc = itemData;
+
+            if (isExternal) {
+              imageSrc = getImageUrlFromExternal(imageSrc);
+            }
+
+            return imageSrc;
           })}
           height={height}
           width={width}

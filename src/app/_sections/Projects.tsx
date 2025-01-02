@@ -1,10 +1,17 @@
 import EmblaCarousel from "@/components/Carousel";
 import Image from "next/image";
 import Section from "@/components/Section";
+import { Content } from "@/types/supabase";
+import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 
 const OPTIONS = { loop: true };
 
-const Projects = () => {
+export type ProjectsProps = {
+  data: Content[];
+};
+const Projects = ({ data }: ProjectsProps) => {
+  const filteredImages = data.filter((project) => !!project.featured_image_url);
+
   return (
     <Section
       id="projects"
@@ -20,48 +27,20 @@ const Projects = () => {
     >
       <div>
         <EmblaCarousel
-          slides={[
-            <Image
-              key="mecapital3"
-              className="h-full w-full object-cover object-top"
-              src="/project/mecapital.png"
-              width={1920}
-              height={1280}
-              alt="mecapital"
-            />,
-            <Image
-              key="mecapital4"
-              className="h-fullw-full object-cover object-top"
-              src="/project/gg.png"
-              width={1920}
-              height={1280}
-              alt="mecapital"
-            />,
-            <Image
-              key="mecapital5"
-              className="h-full w-full object-cover object-top"
-              src="/project/mecapital.png"
-              width={1920}
-              height={1280}
-              alt="mecapital"
-            />,
-            <Image
-              key="mecapital6"
-              className="h-full w-full object-cover object-top"
-              src="/project/jammin.png"
-              width={1920}
-              height={1280}
-              alt="mecapital"
-            />,
-            <Image
-              key="mecapital5"
-              className="h-full w-full object-cover object-top"
-              src="/project/iamfuture.jpg"
-              width={1920}
-              height={1280}
-              alt="mecapital"
-            />,
-          ]}
+          slides={filteredImages.map((value, index) => ({
+            name: value.name,
+            component: (
+              <Image
+                key={`${value.name}${index}`}
+                className="h-full w-full object-cover object-top"
+                src={getImageUrlFromExternal(value.featured_image_url || "")}
+                width={1920}
+                height={1280}
+                alt={`${value.name} featured image`}
+              />
+            ),
+            href: `/project/${value.id}`,
+          }))}
           options={OPTIONS}
         />
       </div>

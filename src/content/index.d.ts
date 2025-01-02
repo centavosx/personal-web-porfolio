@@ -42,15 +42,6 @@ export type ContentData = {
   // Applicable for images only
   orientation?: "landscape" | "portrait";
   breakpoints?: ContentBreakpoints;
-} & ContentStyleProps;
 
-export type Content = {
-  id: string;
-  title: string;
-  description: string | string[];
-  icon: string;
-  status?: "pending" | "completed" | "hold" | "dropped";
-  date: string;
-  content?: ContentData | ContentData[];
-  role?: string;
-};
+  isExternal?: boolean;
+} & ContentStyleProps;
