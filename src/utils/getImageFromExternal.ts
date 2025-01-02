@@ -4,5 +4,3 @@ export const getImageUrlFromExternal = (endpoint: string) => {
   const normalizedPath = endpoint.replace(/^\//, "");
   return `${normalizedBaseUrl}/${normalizedPath}`;
 };
-
-console.log(process.env.NEXT_PUBLIC_IMAGE_URL!);
