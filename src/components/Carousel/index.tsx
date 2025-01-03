@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, useCallback, useEffect } from "react";
+import React, { ReactNode, useEffect } from "react";
 import {
   EmblaCarouselType,
   EmblaEventType,
@@ -34,7 +34,6 @@ const Carousel = ({ slides, options }: CarouselProps) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
   const {
-    selectedIndex,
     prevBtnDisabled,
     nextBtnDisabled,
     onPrevButtonClick,
