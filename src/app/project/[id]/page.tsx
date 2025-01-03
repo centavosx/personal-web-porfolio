@@ -13,6 +13,12 @@ const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(
     const { icon_url, name, description, content, status, date } =
       await Supabase.getContentById(id);
 
+    sectionLinks.push({
+      text: "Overview",
+      href: "#overview",
+      hidden: true,
+    });
+
     return (
       <>
         <Navigation pageUrl={`/project/${id}`} links={sectionLinks} />
@@ -55,7 +61,12 @@ const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(
             {status}
           </Text>
         </Section>
-        <Section className="pt-20 pb-10 px-10" withPadding={false}>
+        <Section
+          className="pt-20 pb-10 px-10"
+          withPadding={false}
+          title="Overview"
+          id="overview"
+        >
           {description?.map((value, index) => (
             <Text className="font-light" key={`description_${index}`}>
               {value}
