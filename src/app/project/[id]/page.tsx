@@ -4,14 +4,14 @@ import Section from "@/components/Section";
 import Text from "@/components/Text";
 import { withContent } from "@/hoc/withContent";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
-import { getContentIdsByType, getContentById } from "@/utils/supabase";
+import Supabase from "@/utils/supabase";
 import Image from "next/image";
 
 const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(
   async ({ params, renderContent, sectionLinks }) => {
     const id = (await params).id;
     const { icon_url, name, description, content, status, date } =
-      await getContentById(id);
+      await Supabase.getContentById(id);
 
     return (
       <>
@@ -72,6 +72,6 @@ const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(
 export default WorkExperience;
 
 export async function generateStaticParams() {
-  const contentIds = await getContentIdsByType("project");
+  const contentIds = await Supabase.getContentIdsByType("project");
   return contentIds;
 }

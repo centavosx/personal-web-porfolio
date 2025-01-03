@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import TailwindCssAnimated from "tailwindcss-animated";
 
 const GAP_SIZES = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 36, 44,
@@ -10,19 +11,7 @@ const ALIGNMENT = ["start", "center", "end"];
 const BREAKPOINT_SIZES = ["xsm", "sm", "md", "lg", "xl", "xxl"];
 
 const FLEX = ["flex-col", "flex-col-reverse", "flex-row", "flex-row-reverse"];
-console.log(
-  JSON.stringify(
-    BREAKPOINT_SIZES.flatMap((breakpoint) => [
-      ...GAP_SIZES.map((value) => `${breakpoint}:gap-${value}`),
-      ...FLEX.map((value) => `${breakpoint}:${value}`),
-      ...["justify", "items", "self"].flatMap((value) =>
-        ALIGNMENT.map((alignment) => `${breakpoint}:${value}-${alignment}`)
-      ),
-      `${breakpoint}:w-full`,
-      `${breakpoint}:w-auto`,
-    ])
-  )
-);
+
 export default {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -47,7 +36,7 @@ export default {
       pattern: /flex-(col|row|col-reverse|row-reverse)+/,
     },
     ...Array.from(
-      { length: 10 },
+      { length: 6 },
       (_, i) =>
         `translate-x-[${i * 10}px]
          -translate-x-[${i * 10}px]
@@ -163,5 +152,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animated")],
+  plugins: [TailwindCssAnimated],
 } satisfies Config;

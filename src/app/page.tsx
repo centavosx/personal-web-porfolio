@@ -7,7 +7,7 @@ import Projects from "./_sections/Projects";
 import WorkExperience from "./_sections/WorkExperience";
 import Footer from "./_sections/Footer";
 import { Content } from "@/types/supabase";
-import { getContents } from "../utils/supabase";
+import Supabase from "@/utils/supabase";
 
 const links = [
   {
@@ -29,10 +29,10 @@ const links = [
 ];
 
 const Home = async () => {
-  const data = await getContents();
+  const data = await Supabase.getContents();
 
-  let workExperiences: Content[] = [];
-  let projects: Content[] = [];
+  const workExperiences: Content[] = [];
+  const projects: Content[] = [];
 
   data.forEach((value) => {
     if (value.type === "work-experience") {

@@ -1,134 +1,14 @@
+import { ImageSizes } from "@/app/constants/sizes";
 import ImageStack from "@/components/ImageStack";
 import { LinkProps } from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
-import type {
-  AlignValue,
-  ContentBreakpoints,
-  ContentData,
-  ContentType,
-  ResponsiveProps,
-} from "@/types/content";
+import type { ContentData } from "@/types/content";
+import DynamicContent from "@/utils/dynamic-content";
 import { extendClassByProp } from "@/utils/extendClassByProp";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Image from "next/image";
 import { ComponentType, Fragment, ReactNode } from "react";
-
-const justifyClasses: Record<AlignValue, string> = {
-  start: "justify-start",
-  center: "justify-center",
-  end: "justify-end",
-};
-
-const alignItemsClasses: Record<AlignValue, string> = {
-  start: "items-start",
-  center: "items-center",
-  end: "items-end",
-};
-
-const selfAlignClasses: Record<AlignValue, string> = {
-  start: "self-start",
-  center: "self-center",
-  end: "self-end",
-};
-
-const flexDirectionClasses: Record<
-  "row" | "column" | "column-reversed" | "row-reversed",
-  string
-> = {
-  column: "flex-col",
-  "column-reversed": "flex-col-reverse",
-  row: "flex-row",
-  "row-reversed": "flex-row-reverse",
-};
-
-type ResponsiveClassNames = {
-  gap: string;
-  alignItemsClass?: string;
-  justifyClass?: string;
-  selfAlignClass?: string;
-  flexClassName?: string;
-  flexWidthClass?: string;
-};
-
-const generateResponsiveClassNames = (
-  type: ContentType,
-  style: ResponsiveProps,
-  currentBreakpoint: string | ContentBreakpoints
-): ResponsiveClassNames => {
-  const { gap: currentGap, justify, alignItems, selfAlign, direction } = style;
-
-  const alignItemsClass = !!alignItems
-    ? alignItemsClasses[alignItems]
-    : undefined;
-  const justifyClass = !!justify ? justifyClasses[justify] : undefined;
-  const selfAlignClass = !!selfAlign ? selfAlignClasses[selfAlign] : undefined;
-  const flexClassName = !!direction
-    ? flexDirectionClasses[direction]
-    : undefined;
-  const flexWidthClass =
-    direction === "column" || direction === "column-reversed"
-      ? "w-full"
-      : "w-auto";
-
-  let gap = `gap-${currentGap ?? 8}`;
-
-  switch (type) {
-    case "bullet":
-    case "numeric":
-      gap = `gap-${currentGap ?? 1}`;
-      break;
-  }
-
-  let data: ResponsiveClassNames = {
-    gap,
-    alignItemsClass,
-    justifyClass,
-    selfAlignClass,
-    flexClassName,
-    flexWidthClass,
-  };
-
-  if (typeof currentBreakpoint === "string")
-    return Object.keys(data).reduce((accumulator, key) => {
-      const currentKey = key as keyof typeof data;
-      const currentDataKeyValue = data[currentKey];
-      accumulator[currentKey] = !!currentDataKeyValue
-        ? `${currentBreakpoint}:${currentDataKeyValue}`
-        : undefined!;
-      return accumulator;
-    }, {} as typeof data);
-
-  for (const key of Object.keys(currentBreakpoint)) {
-    const currentBreakpointData =
-      currentBreakpoint[key as keyof ContentBreakpoints];
-
-    if (!currentBreakpointData) continue;
-
-    const breakpointClasses = generateResponsiveClassNames(
-      type,
-      currentBreakpointData,
-      key
-    );
-
-    data = Object.keys(data).reduce((accumulator, key) => {
-      const currentKey = key as keyof typeof data;
-      let currentDataKeyValue = data[currentKey];
-      const breakpointClassValue = breakpointClasses[currentKey];
-
-      if (!!breakpointClassValue) {
-        currentDataKeyValue = `${
-          !!currentDataKeyValue ? `${currentDataKeyValue} ` : ""
-        }${breakpointClassValue}`;
-      }
-
-      accumulator[currentKey] = currentDataKeyValue!;
-      return accumulator;
-    }, {} as typeof data);
-  }
-
-  return data;
-};
 
 export type WithContentExtendedProps = {
   renderContent: (
@@ -177,10 +57,10 @@ export const withContent = <P extends Record<string, unknown>>(
       alignItemsClass,
       justifyClass,
       selfAlignClass,
-      flexClassName,
-      gap: gapClass,
+      flexClass,
+      gapClass,
       flexWidthClass,
-    } = generateResponsiveClassNames(type, content, breakpoints);
+    } = DynamicContent.generateResponsiveClassNames(type, content, breakpoints);
 
     const combinedAlignClasses = extendClassByProp(
       {},
@@ -309,7 +189,9 @@ export const withContent = <P extends Record<string, unknown>>(
               <div
                 {...extendClassByProp(
                   {},
-                  `flex ${gapClass} ${flexClassName} flex-wrap`,
+                  `flex flex-wrap`,
+                  gapClass,
+                  flexClass || "",
                   justifyClass || "",
                   alignItemsClass || ""
                 )}
@@ -324,87 +206,7 @@ export const withContent = <P extends Record<string, unknown>>(
       }
     }
 
-    let height;
-    let width;
-
-    switch (orientation) {
-      case "landscape":
-        const landscapeSizes = {
-          xs: {
-            height: 210,
-            width: 375,
-          },
-          sm: {
-            height: 324,
-            width: 576,
-          },
-          md: {
-            height: 432,
-            width: 768,
-          },
-          lg: {
-            height: 558,
-            width: 992,
-          },
-          xl: {
-            height: 675,
-            width: 1200,
-          },
-          xxl: {
-            height: 787,
-            width: 1400,
-          },
-        };
-        const currentLandscapeSize = landscapeSizes[size];
-        width = currentLandscapeSize.width;
-        height = currentLandscapeSize.height;
-        break;
-
-      case "portrait":
-        const portraitSizes = {
-          xs: {
-            height: 200,
-            width: 150,
-          },
-          sm: {
-            height: 256,
-            width: 192,
-          },
-          md: {
-            height: 320,
-            width: 240,
-          },
-          lg: {
-            height: 384,
-            width: 288,
-          },
-          xl: {
-            height: 512,
-            width: 384,
-          },
-          xxl: {
-            height: 640,
-            width: 480,
-          },
-        };
-        const currentPortraitSize = portraitSizes[size];
-        width = currentPortraitSize.width;
-        height = currentPortraitSize.height;
-        break;
-
-      default:
-        const defaultImgSize = {
-          xs: 28,
-          sm: 36,
-          md: 48,
-          lg: 56,
-          xl: 72,
-          xxl: 108,
-        };
-        const defaultSize = defaultImgSize[size];
-        height = defaultSize;
-        width = defaultSize;
-    }
+    const { height, width } = ImageSizes[orientation || "icon"][size];
 
     if (type === "image") {
       if (!isDataString)
@@ -447,6 +249,7 @@ export const withContent = <P extends Record<string, unknown>>(
       <div
         key={key}
         {...extendClassByProp({}, "flex-1 flex", combinedAlignClasses)}
+        style={{ height: height + 60, width }}
       >
         <ImageStack
           srcs={data.map((item) => {
@@ -457,9 +260,10 @@ export const withContent = <P extends Record<string, unknown>>(
               throw new Error("image-stack item data should be a string path!");
             }
 
+            const isCurrentItemExternal = item.isExternal ?? isExternal;
             let imageSrc = itemData;
 
-            if (isExternal) {
+            if (isCurrentItemExternal) {
               imageSrc = getImageUrlFromExternal(imageSrc);
             }
 

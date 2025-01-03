@@ -102,7 +102,6 @@ const Navigation = ({ pageUrl = "/", links }: NavigationProps) => {
                   >
                     {value.text}
                   </Text>
-                  <a></a>
                 </li>
               );
             })}

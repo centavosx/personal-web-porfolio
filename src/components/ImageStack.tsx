@@ -84,42 +84,44 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
   }, [srcs, startImageLoop]);
 
   return (
-    <div ref={divRef} className="relative transition-all">
-      {srcs.map((src, index) => (
-        <div
-          ref={(r) => {
-            if (!r) return;
-            imageEls.current[index] = r;
-          }}
-          key={`img_container_${index}`}
-          {...extendClassByProp(
-            {},
-            "rounded-md",
-            index === 0 ? "relative" : "absolute",
-            "transform transition-all top-0 left-0",
-            `z-[${srcs.length - 1 - index}]`,
-            `translate-x-[${index * 10}px]`,
-            `-translate-y-[${index * 10}px]`,
-            `hover:-translate-y-[${index * 25}px]`,
-            "after:top-0 after:absolute after:rounded-md after:h-full after:w-full transition-all duration-300"
-          )}
-          onClick={handleClick(index)}
-          onMouseEnter={() => {
-            if (intervalIdRef.current !== null)
-              clearInterval(intervalIdRef.current);
-          }}
-          onMouseLeave={startImageLoop}
-        >
-          <Image
-            className="rounded-md border-2 border-primary"
-            id={`${index}`}
-            src={src}
-            alt="image"
-            height={height}
-            width={width}
-          />
-        </div>
-      ))}
+    <div ref={divRef} className="relative transition-all flex">
+      <div className="relative self-center">
+        {srcs.map((src, index) => (
+          <div
+            ref={(r) => {
+              if (!r) return;
+              imageEls.current[index] = r;
+            }}
+            key={`img_container_${index}`}
+            {...extendClassByProp(
+              {},
+              "rounded-md",
+              index === 0 ? "relative" : "absolute",
+              "transform transition-all top-0 left-0 self-center",
+              `z-[${srcs.length - 1 - index}]`,
+              `translate-x-[${index * 10}px]`,
+              `-translate-y-[${index * 10}px]`,
+              `hover:-translate-y-[${index * 25}px]`,
+              "after:top-0 after:absolute after:rounded-md after:h-full after:w-full transition-all duration-300"
+            )}
+            onClick={handleClick(index)}
+            onMouseEnter={() => {
+              if (intervalIdRef.current !== null)
+                clearInterval(intervalIdRef.current);
+            }}
+            onMouseLeave={startImageLoop}
+          >
+            <Image
+              className="rounded-md border-2 border-primary"
+              id={`${index}`}
+              src={src}
+              alt="image"
+              height={height}
+              width={width}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

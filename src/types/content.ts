@@ -13,7 +13,7 @@ export type ContentType =
 
 export type AlignValue = "start" | "center" | "end";
 
-export type ResponsiveProps = {
+export type ResponsiveStyleProps = {
   direction?: "row" | "column" | "row-reversed" | "column-reversed";
   gap?: number;
   justify?: AlignValue;
@@ -25,10 +25,10 @@ export type ContentStyleProps = {
   textClassName?: string;
   titleTextSize?: TextSize;
   size?: TextSize;
-} & ResponsiveProps;
+} & ResponsiveStyleProps;
 
 export type ContentBreakpoints = Partial<
-  Record<"xsm" | "sm" | "md" | "lg" | "xl" | "xxl", ResponsiveProps>
+  Record<"xsm" | "sm" | "md" | "lg" | "xl" | "xxl", ResponsiveStyleProps>
 >;
 
 export type ContentData = {
