@@ -1,5 +1,5 @@
-import { ImageSizes } from "@/app/constants/sizes";
-import ImageStack, { MAX_IMAGE_STACK_SIZE } from "@/components/ImageStack";
+import { ImageSizes } from "@/constants/sizes";
+import ImageStack from "@/components/ImageStack";
 import { LinkProps } from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
@@ -9,6 +9,7 @@ import { extendClassByProp } from "@/utils/extendClassByProp";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Image from "next/image";
 import { ComponentType, Fragment, ReactNode } from "react";
+import { ImageConst } from "@/constants/image";
 
 export type WithContentExtendedProps = {
   renderContent: (
@@ -249,7 +250,7 @@ export const withContent = <P extends Record<string, unknown>>(
       <div
         key={key}
         {...extendClassByProp({}, "flex-1 flex", combinedAlignClasses)}
-        style={{ height: height + MAX_IMAGE_STACK_SIZE, width }}
+        style={{ height: height + ImageConst.maxStackSize, width }}
       >
         <ImageStack
           srcs={data.map((item) => {

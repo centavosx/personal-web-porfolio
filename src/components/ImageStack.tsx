@@ -1,13 +1,12 @@
 "use client";
 
+import { ImageConst } from "@/constants/image";
 import { extendClassByProp } from "@/utils/extendClassByProp";
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
 
 const TRANSLATE_ITEM_INDEX_MULTIPLIER = 10;
 const TRANSLATE_HOVER_ITEM_MULTIPLIER = 25;
-
-export const MAX_IMAGE_STACK_SIZE = 6;
 
 export type ImageStackProps = {
   srcs: string[];
@@ -88,7 +87,7 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
     startImageLoop();
   }, [srcs, startImageLoop]);
 
-  if (srcs.length >= MAX_IMAGE_STACK_SIZE)
+  if (srcs.length >= ImageConst.maxStackSize)
     throw new Error("Maximum image stack is six!");
 
   return (

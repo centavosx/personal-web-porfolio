@@ -1,4 +1,4 @@
-import TwClasses from "@/app/constants/tailwind";
+import TwClasses from "@/constants/tailwind";
 import {
   ContentBreakpoints,
   ContentType,
