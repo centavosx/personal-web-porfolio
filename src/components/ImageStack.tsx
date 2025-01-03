@@ -4,6 +4,11 @@ import { extendClassByProp } from "@/utils/extendClassByProp";
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
 
+const TRANSLATE_ITEM_INDEX_MULTIPLIER = 10;
+const TRANSLATE_HOVER_ITEM_MULTIPLIER = 25;
+
+export const MAX_IMAGE_STACK_SIZE = 6;
+
 export type ImageStackProps = {
   srcs: string[];
   height: number;
@@ -83,6 +88,9 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
     startImageLoop();
   }, [srcs, startImageLoop]);
 
+  if (srcs.length >= MAX_IMAGE_STACK_SIZE)
+    throw new Error("Maximum image stack is six!");
+
   return (
     <div ref={divRef} className="relative transition-all flex">
       <div className="relative self-center">
@@ -99,9 +107,13 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
               index === 0 ? "relative" : "absolute",
               "transform transition-all top-0 left-0 self-center",
               `z-[${srcs.length - 1 - index}]`,
-              `translate-x-[${index * 10}px]`,
-              `-translate-y-[${index * 10}px]`,
-              `hover:-translate-y-[${index * 25}px]`,
+              `translate-x-[${index * TRANSLATE_ITEM_INDEX_MULTIPLIER}px]`,
+              `-translate-y-[${index * TRANSLATE_ITEM_INDEX_MULTIPLIER}px]`,
+              index === 0
+                ? ""
+                : `hover:-translate-y-[${
+                    (srcs.length - 1) * TRANSLATE_HOVER_ITEM_MULTIPLIER
+                  }px]`,
               "after:top-0 after:absolute after:rounded-md after:h-full after:w-full transition-all duration-300"
             )}
             onClick={handleClick(index)}

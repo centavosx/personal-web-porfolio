@@ -1,5 +1,5 @@
 import { ImageSizes } from "@/app/constants/sizes";
-import ImageStack from "@/components/ImageStack";
+import ImageStack, { MAX_IMAGE_STACK_SIZE } from "@/components/ImageStack";
 import { LinkProps } from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
@@ -249,7 +249,7 @@ export const withContent = <P extends Record<string, unknown>>(
       <div
         key={key}
         {...extendClassByProp({}, "flex-1 flex", combinedAlignClasses)}
-        style={{ height: height + 60, width }}
+        style={{ height: height + MAX_IMAGE_STACK_SIZE, width }}
       >
         <ImageStack
           srcs={data.map((item) => {
