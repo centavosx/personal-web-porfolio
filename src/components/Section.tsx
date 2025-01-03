@@ -101,7 +101,12 @@ const Section = forwardRef(
                   {description}
                 </Text>
                 {!hidden && (
-                  <Button className="w-20" variant="outlined" {...buttonRest}>
+                  <Button
+                    className="w-20"
+                    variant="outlined"
+                    aria-label="Read More"
+                    {...buttonRest}
+                  >
                     More
                   </Button>
                 )}

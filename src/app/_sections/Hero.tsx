@@ -32,13 +32,28 @@ const Hero = () => {
         Software Developer
       </Text>
       <div className="flex gap-4">
-        <Button variant="icon" href="/daw" className="py-1 px-1">
+        <Button
+          variant="icon"
+          href="/daw"
+          className="py-1 px-1"
+          aria-label="Check my email"
+        >
           <EmailIcon height={37} width={37} />
         </Button>
-        <Button variant="icon" href="/daw" className="py-1 px-1">
+        <Button
+          variant="icon"
+          href="/daw"
+          className="py-1 px-1"
+          aria-label="Check my github"
+        >
           <GithubIcon height={37} width={37} />
         </Button>
-        <Button variant="icon" href="/daw" className="py-1 px-1">
+        <Button
+          variant="icon"
+          href="/daw"
+          className="py-1 px-1"
+          aria-label="Check my linkedin"
+        >
           <LinkedInIcon height={37} width={37} />
         </Button>
       </div>

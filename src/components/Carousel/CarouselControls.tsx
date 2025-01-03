@@ -13,6 +13,7 @@ export const ControlButton = (props: PropType) => {
     <button
       className="embla__button appearance-none touch-manipulation cursor-pointer shadow-md hover:scale-125 active:scale-100 duration-300"
       type="button"
+      aria-label={isPrev ? "Carousel Previous Item" : "Carousel Next Item"}
       {...restProps}
     >
       {isPrev ? (

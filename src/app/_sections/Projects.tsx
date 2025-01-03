@@ -35,7 +35,7 @@ const Projects = ({ data }: ProjectsProps) => {
                 className="h-full w-full object-cover object-top"
                 src={getImageUrlFromExternal(value.featured_image_url || "")}
                 width={1920}
-                height={1280}
+                height={544}
                 alt={`${value.name} featured image`}
               />
             ),
