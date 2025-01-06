@@ -43,6 +43,7 @@ const Button = forwardRef(
         ),
         ref,
         href,
+        target: "__blank",
       },
       children
     );

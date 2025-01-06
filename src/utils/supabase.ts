@@ -4,12 +4,12 @@ import { error } from "console";
 
 class Supabase {
   static get currentId() {
-    return (process.env.NEXT_PUBLIC_ABOUT_ID as string) || "";
+    return (process.env.ABOUT_ID as string) || "";
   }
   static get client() {
     return createClient<Database>(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_ANON_KEY!
     );
   }
 
@@ -108,7 +108,9 @@ class Supabase {
 
   static async getAbout() {
     const { data } = Supabase.handleError(
-      await Supabase.about.select("*").single(),
+      await Supabase.about
+        .select("*, content(id,name,description,type,icon_url,role)")
+        .single(),
       "About should be available"
     );
 

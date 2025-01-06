@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
 import Footer from "../_sections/Footer";
+import Supabase from "@/utils/supabase";
 
 const links = [
   {
@@ -44,7 +45,8 @@ const aboutMeData = {
   },
 };
 
-const About = () => {
+const About = async () => {
+  const data = await Supabase.getAbout();
   return (
     <>
       <Navigation pageUrl="/about" links={links} />
