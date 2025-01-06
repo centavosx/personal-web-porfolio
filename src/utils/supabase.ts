@@ -26,7 +26,10 @@ class Supabase {
   }
 
   static async getContents() {
-    const { data, error } = await Supabase.client.from("content").select("*");
+    const { data, error } = await Supabase.client
+      .from("content")
+      .select("*")
+      .eq("is_featured", true);
 
     if (error) {
       throw error;

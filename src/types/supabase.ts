@@ -1,4 +1,5 @@
 import { ContentData } from "./content";
+import { PartialExcept } from "./generics";
 
 export type Json =
   | string
@@ -21,7 +22,10 @@ export type Content = {
   role: string | null;
   status: Database["public"]["Enums"]["content_status_enum"] | null;
   type: Database["public"]["Enums"]["content_type_enum"] | null;
+  is_featured: boolean;
 };
+
+// Supabase generated types
 
 export type Database = {
   graphql_public: {
@@ -53,34 +57,8 @@ export type Database = {
     Tables: {
       content: {
         Row: Content;
-        Insert: {
-          content?: ContentData | ContentData[] | null;
-          created_at?: string;
-          description?: string[] | null;
-          date?: string | null;
-          icon_url?: string | null;
-          featured_image_url?: string | null;
-          id?: string;
-          modified_at?: string | null;
-          name: string;
-          role?: string | null;
-          status?: Database["public"]["Enums"]["content_status_enum"] | null;
-          type?: Database["public"]["Enums"]["content_type_enum"] | null;
-        };
-        Update: {
-          content?: ContentData | ContentData[] | null;
-          created_at?: string;
-          description?: string[] | null;
-          date?: string | null;
-          icon_url?: string | null;
-          featured_image_url?: string | null;
-          id?: string;
-          modified_at?: string | null;
-          name?: string;
-          role?: string | null;
-          status?: Database["public"]["Enums"]["content_status_enum"] | null;
-          type?: Database["public"]["Enums"]["content_type_enum"] | null;
-        };
+        Insert: PartialExcept<Content, "name">;
+        Update: Partial<Content>;
         Relationships: [];
       };
     };
