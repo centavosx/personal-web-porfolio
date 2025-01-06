@@ -108,9 +108,7 @@ class Supabase {
 
   static async getAbout() {
     const { data } = Supabase.handleError(
-      await Supabase.about
-        .select("*, content(id,name,description,type,icon_url,role)")
-        .single(),
+      await Supabase.about.select("*").single(),
       "About should be available"
     );
 

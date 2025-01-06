@@ -31,27 +31,27 @@ export class ImageSizes {
   static get portrait() {
     return {
       xs: {
-        height: 200,
+        height: 300,
         width: 150,
       },
       sm: {
-        height: 256,
+        height: 456,
         width: 192,
       },
       md: {
-        height: 320,
+        height: 520,
         width: 240,
       },
       lg: {
-        height: 384,
+        height: 584,
         width: 288,
       },
       xl: {
-        height: 512,
+        height: 612,
         width: 384,
       },
       xxl: {
-        height: 640,
+        height: 740,
         width: 480,
       },
     } as const;

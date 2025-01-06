@@ -123,7 +123,7 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
             onMouseLeave={startImageLoop}
           >
             <Image
-              className="rounded-md border-2 border-primary"
+              className="rounded-md border-2 border-primary object-contain"
               id={`${index}`}
               src={src}
               alt="image"
