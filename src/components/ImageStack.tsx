@@ -92,7 +92,7 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
 
   return (
     <div ref={divRef} className="relative transition-all flex">
-      <div className="relative self-center">
+      <div className="relative self-center flex flex-1">
         {srcs.map((src, index) => (
           <div
             ref={(r) => {

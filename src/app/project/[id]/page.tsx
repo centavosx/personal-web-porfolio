@@ -5,9 +5,51 @@ import Text from "@/components/Text";
 import { withContent } from "@/hoc/withContent";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Supabase from "@/utils/supabase";
+import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 
-const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(
+export type WorkExperienceProps = {
+  params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata(
+  { params }: WorkExperienceProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const id = (await params).id;
+
+  const {
+    data: { name, description, featured_image_url },
+  } = Supabase.handleError(
+    await Supabase.content
+      .eq("id", id)
+      .select("name, description, featured_image_url")
+      .single(),
+    "Content should be available"
+  );
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  const currentDescription = description || ["Sample Project"];
+  const descriptionFirstItem = currentDescription[0];
+  return {
+    title: name,
+    description: descriptionFirstItem,
+    openGraph: {
+      title: name,
+      description: descriptionFirstItem,
+      images: [
+        ...(featured_image_url
+          ? [getImageUrlFromExternal(featured_image_url)]
+          : []),
+        ...previousImages,
+      ],
+    },
+  };
+}
+
+const WorkExperience = withContent<WorkExperienceProps>(
   async ({ params, renderContent, sectionLinks }) => {
     const id = (await params).id;
     const { icon_url, name, description, content, status, date } =

@@ -250,7 +250,7 @@ export const withContent = <P extends Record<string, unknown>>(
       <div
         key={key}
         {...extendClassByProp({}, "flex-1 flex relative", combinedAlignClasses)}
-        style={{ height: height + ImageConst.maxStackSize, width }}
+        style={{ height: height + ImageConst.maxStackSize }}
       >
         <ImageStack
           srcs={data.map((item) => {
