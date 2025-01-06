@@ -2,7 +2,10 @@ import Section from "@/components/Section";
 import MutedIconLabel from "@/components/MutedIconLabel";
 import Supabase from "@/utils/supabase";
 
-const AboutMe = async () => {
+export type AboutMeProps = {
+  shortDescription: string;
+};
+const AboutMe = async ({ shortDescription }: AboutMeProps) => {
   const services = await Supabase.getServices();
 
   return (
@@ -10,14 +13,14 @@ const AboutMe = async () => {
       <Section
         id="about"
         title="About Me"
-        description="As a software developer, I don't just build applications. I focus on identifying software and real world problems, creating effective solutions, and delivering results that have a lasting impact. I am committed to continuous learning, exploring new challenges, and constantly seeking innovative ways to improve both code and user experience."
+        description={shortDescription}
         moreButton={{ href: "/about" }}
       />
       <Section title="What I offer?">
         <div className="flex flex-row gap-8 xl:gap-24 relative justify-around flex-wrap">
           {services.map((value, index) => (
             <MutedIconLabel
-              key={`${value.name}_${index}`}
+              key={`${value.id}_${index}`}
               label={value.name}
               containerProps={{
                 className: "w-full md:max-w-[300px]",

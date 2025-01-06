@@ -1,7 +1,11 @@
 import { Content, Database } from "@/types/supabase";
-import { createClient } from "@supabase/supabase-js";
+import { createClient, PostgrestSingleResponse } from "@supabase/supabase-js";
+import { error } from "console";
 
 class Supabase {
+  static get currentId() {
+    return (process.env.NEXT_PUBLIC_ABOUT_ID as string) || "";
+  }
   static get client() {
     return createClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -9,113 +13,118 @@ class Supabase {
     );
   }
 
+  static handleError<T>(
+    result: PostgrestSingleResponse<T>,
+    emptyError?: string
+  ) {
+    if (result.error) throw error;
+    if (!!emptyError && !result.data) throw new Error(emptyError);
+    return result;
+  }
+
   static get content() {
-    return Supabase.client.from("content");
+    return Supabase.client
+      .from("content")
+      .select("*")
+      .eq("about_id", Supabase.currentId);
   }
 
   static get service() {
-    return Supabase.client.from("service");
+    return Supabase.client
+      .from("service")
+      .select("*")
+      .eq("about_id", Supabase.currentId);
   }
 
   static get technology() {
-    return Supabase.client.from("technology");
+    return Supabase.client
+      .from("technology")
+      .select("*")
+      .eq("about_id", Supabase.currentId);
   }
 
   static get about() {
-    return Supabase.client.from("about");
+    return Supabase.client.from("about").select("*");
+  }
+
+  static get link() {
+    return Supabase.client
+      .from("link")
+      .select("*")
+      .eq("about_id", Supabase.currentId);
+  }
+
+  static get address() {
+    return Supabase.client
+      .from("address")
+      .select("*")
+      .eq("about_id", Supabase.currentId);
   }
 
   static async getContentById(id: string) {
-    const { data, error } = await Supabase.content
-      .select("*")
-      .eq("id", id)
-      .limit(1);
+    const { data } = Supabase.handleError(
+      await Supabase.content.eq("id", id).single(),
+      "Content should be available"
+    );
 
-    if (error) {
-      throw error;
-    }
-
-    if (!data?.length) throw new Error("Content should be available");
-
-    return data[0];
+    return data;
   }
 
   static async getContents() {
-    const { data, error } = await Supabase.content
-      .select("*")
-      .eq("is_featured", true);
+    const { data } = Supabase.handleError(
+      await Supabase.content.eq("is_featured", true)
+    );
 
-    if (error) {
-      throw error;
-    }
-
-    return data || [];
+    return data;
   }
 
   static async getContentIdsByType(type: Exclude<Content["type"], null>) {
-    const { data, error } = await Supabase.content
-      .select("id")
-      .eq("type", type);
+    const { data } = Supabase.handleError(
+      await Supabase.content.eq("type", type).select("id")
+    );
 
-    if (error) {
-      throw error;
-    }
-
-    return data || [];
+    return data;
   }
 
   static async getServices() {
-    const { data, error } = await Supabase.service
-      .select("*")
-      .order("created_at", {
+    const { data } = Supabase.handleError(
+      await Supabase.service.order("created_at", {
         ascending: true,
-      });
+      })
+    );
 
-    if (error) {
-      throw error;
-    }
-
-    return data || [];
+    return data;
   }
 
   static async getCoreTech() {
-    const { data, error } = await Supabase.technology
-      .select("*")
-      .eq("is_core", true)
-      .order("created_at", {
+    const { data } = Supabase.handleError(
+      await Supabase.technology.eq("is_core", true).order("created_at", {
         ascending: true,
-      });
+      })
+    );
 
-    if (error) {
-      throw error;
-    }
-
-    return data || [];
+    return data;
   }
 
-  static async getAboutShortDescription() {
-    const { data, error } = await Supabase.about
-      .select("short_description")
-      .limit(1);
+  static async getAbout() {
+    const { data } = Supabase.handleError(
+      await Supabase.about.select("*").single(),
+      "About should be available"
+    );
 
-    if (error) {
-      throw error;
-    }
-
-    if (!data?.length) throw new Error("About should be available");
-
-    return data[0].short_description;
+    return data;
   }
 
-  static async getAboutFullDetails() {
-    const { data, error } = await Supabase.about.select("*").limit(1);
-    if (error) {
-      throw error;
-    }
+  static async getLinks() {
+    const { data } = Supabase.handleError(await Supabase.link);
 
-    if (!data?.length) throw new Error("About should be available");
+    return data;
+  }
 
-    return data[0];
+  static async getAddresses() {
+    const { data } = Supabase.handleError(await Supabase.address);
+
+    return data;
   }
 }
 

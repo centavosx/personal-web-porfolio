@@ -30,6 +30,12 @@ const links = [
 
 const Home = async () => {
   const data = await Supabase.getContents();
+  const { data: aboutData } = Supabase.handleError(
+    await Supabase.about
+      .select("short_description, link(*), address(*)")
+      .single(),
+    "About should be available"
+  );
 
   const workExperiences: Content[] = [];
   const projects: Content[] = [];
@@ -45,8 +51,8 @@ const Home = async () => {
   return (
     <>
       <Navigation links={links} />
-      <Hero />
-      <AboutMe />
+      <Hero links={aboutData.link} />
+      <AboutMe shortDescription={aboutData.short_description} />
       <WorkExperience data={workExperiences} />
       <CoreTech />
       <Projects data={projects} />

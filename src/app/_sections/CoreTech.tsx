@@ -66,7 +66,7 @@ const CoreTech = async () => {
             <div className="flex flex-col sm:flex-row flex-1 flex-wrap gap-12">
               {tech.data?.map((value, dataIndex) => (
                 <div
-                  key={`${value.name}_${dataIndex}`}
+                  key={`${value.id}_${dataIndex}`}
                   className="flex flex-row sm:flex-col items-center gap-4 group/icon"
                 >
                   <div className="group-hover/icon:scale-125 transition-all">

@@ -3,11 +3,23 @@
 import Button from "@/components/Button";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
-import LinkedInIcon from "../../../public/svg/linkedin.svg";
-import GithubIcon from "../../../public/svg/github.svg";
+import { Link } from "@/types/supabase";
+import CodewarsIcon from "../../../public/svg/codewars.svg";
 import EmailIcon from "../../../public/svg/email.svg";
+import GithubIcon from "../../../public/svg/github.svg";
+import LinkedInIcon from "../../../public/svg/linkedin.svg";
 
-const Hero = () => {
+const icons = {
+  email: <EmailIcon height={37} width={37} />,
+  github: <GithubIcon height={37} width={37} />,
+  linkedin: <LinkedInIcon height={37} width={37} />,
+  codewars: <CodewarsIcon height={37} width={37} />,
+};
+
+export type HeroProps = {
+  links: Link[];
+};
+const Hero = ({ links }: HeroProps) => {
   return (
     <Section
       containerProps={{
@@ -25,37 +37,31 @@ const Hero = () => {
       </Text>
       <Text
         as="h1"
-        className="ffont-raleway font-bold"
+        className="font-raleway font-bold"
         size="lg"
         color="tertiary"
       >
         Software Developer
       </Text>
       <div className="flex gap-4">
-        <Button
-          variant="icon"
-          href="/daw"
-          className="py-1 px-1"
-          aria-label="Check my email"
-        >
-          <EmailIcon height={37} width={37} />
-        </Button>
-        <Button
-          variant="icon"
-          href="/daw"
-          className="py-1 px-1"
-          aria-label="Check my github"
-        >
-          <GithubIcon height={37} width={37} />
-        </Button>
-        <Button
-          variant="icon"
-          href="/daw"
-          className="py-1 px-1"
-          aria-label="Check my linkedin"
-        >
-          <LinkedInIcon height={37} width={37} />
-        </Button>
+        {links.map((value, index) => {
+          const type = value.type;
+          const icon = icons[type as keyof typeof icons];
+
+          if (!icon) return null;
+
+          return (
+            <Button
+              key={`${value.id}_${index}`}
+              variant="icon"
+              href={value.link}
+              className="py-1 px-1"
+              aria-label={`Check my ${value.type}`}
+            >
+              {icon}
+            </Button>
+          );
+        })}
       </div>
     </Section>
   );
