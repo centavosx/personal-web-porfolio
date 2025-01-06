@@ -3,53 +3,27 @@ import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
 import { withContent } from "@/hoc/withContent";
+import { createContentMetadata } from "@/utils/createContentMetadata";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Supabase from "@/utils/supabase";
 import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 
-export type WorkExperienceProps = {
+export type ProjectProps = {
   params: Promise<{ id: string }>;
 };
 
 export async function generateMetadata(
-  { params }: WorkExperienceProps,
+  { params }: ProjectProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const id = (await params).id;
+  const previousImages = ((await parent).openGraph?.images || []) as string[];
 
-  const {
-    data: { name, description, featured_image_url },
-  } = Supabase.handleError(
-    await Supabase.content
-      .eq("id", id)
-      .select("name, description, featured_image_url")
-      .single(),
-    "Content should be available"
-  );
-
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
-
-  const currentDescription = description || ["Sample Project"];
-  const descriptionFirstItem = currentDescription[0];
-  return {
-    title: name,
-    description: descriptionFirstItem,
-    openGraph: {
-      title: name,
-      description: descriptionFirstItem,
-      images: [
-        ...(featured_image_url
-          ? [getImageUrlFromExternal(featured_image_url)]
-          : []),
-        ...previousImages,
-      ],
-    },
-  };
+  return createContentMetadata(id, "Project", previousImages);
 }
 
-const WorkExperience = withContent<WorkExperienceProps>(
+const Project = withContent<ProjectProps>(
   async ({ params, renderContent, sectionLinks }) => {
     const id = (await params).id;
     const { icon_url, name, description, content, status, date } =
@@ -122,7 +96,7 @@ const WorkExperience = withContent<WorkExperienceProps>(
   }
 );
 
-export default WorkExperience;
+export default Project;
 
 export async function generateStaticParams() {
   const contentIds = await Supabase.getContentIdsByType("project");

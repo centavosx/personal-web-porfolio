@@ -3,10 +3,26 @@ import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
 import { withContent } from "@/hoc/withContent";
+import { createContentMetadata } from "@/utils/createContentMetadata";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Supabase from "@/utils/supabase";
+import { Metadata, ResolvingMetadata } from "next";
 
 import Image from "next/image";
+
+export type WorkExperienceProps = {
+  params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata(
+  { params }: WorkExperienceProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const id = (await params).id;
+  const previousImages = ((await parent).openGraph?.images || []) as string[];
+
+  return createContentMetadata(id, "Work Experience", previousImages);
+}
 
 const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(
   async ({ params, renderContent, sectionLinks }) => {
