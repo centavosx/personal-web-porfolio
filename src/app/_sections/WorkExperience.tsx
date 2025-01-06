@@ -24,26 +24,30 @@ const WorkExperience = ({ data }: WorkExperienceProps) => {
     name = "",
   } = data[currentIndex] || {};
 
-  const handleChangeItem = useCallback((isPrev?: boolean) => {
-    setIsChanging(true);
+  const handleChangeItem = useCallback(
+    (isPrev?: boolean) => {
+      setIsChanging(true);
 
-    if (timeoutIdRef.current !== undefined) clearTimeout(timeoutIdRef.current);
+      if (timeoutIdRef.current !== undefined)
+        clearTimeout(timeoutIdRef.current);
 
-    sectionRef.current?.classList.add("animate-pulse-full");
-
-    timeoutIdRef.current = setTimeout(() => {
-      setCurrentIndex((currentIndex) => {
-        const lastIndex = data.length - 1;
-        if (isPrev) return currentIndex > 0 ? currentIndex - 1 : lastIndex;
-        return currentIndex < lastIndex ? currentIndex + 1 : 0;
-      });
+      sectionRef.current?.classList.add("animate-pulse-full");
 
       timeoutIdRef.current = setTimeout(() => {
-        sectionRef.current?.classList.remove("animate-pulse-full");
-        setIsChanging(false);
-      }, 600);
-    }, 400);
-  }, []);
+        setCurrentIndex((currentIndex) => {
+          const lastIndex = data.length - 1;
+          if (isPrev) return currentIndex > 0 ? currentIndex - 1 : lastIndex;
+          return currentIndex < lastIndex ? currentIndex + 1 : 0;
+        });
+
+        timeoutIdRef.current = setTimeout(() => {
+          sectionRef.current?.classList.remove("animate-pulse-full");
+          setIsChanging(false);
+        }, 600);
+      }, 400);
+    },
+    [data.length]
+  );
 
   const handleRestartInterval = useCallback(() => {
     if (timeoutIdRef.current !== undefined)

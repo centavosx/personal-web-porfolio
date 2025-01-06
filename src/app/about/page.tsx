@@ -3,7 +3,6 @@ import Section from "@/components/Section";
 import Text from "@/components/Text";
 import Footer from "../_sections/Footer";
 import Supabase from "@/utils/supabase";
-import { Content } from "@/types/supabase";
 
 const links = [
   {

@@ -57,6 +57,7 @@ const Hero = ({ links }: HeroProps) => {
               href={value.link}
               className="py-1 px-1"
               aria-label={`Check my ${value.type}`}
+              target="__blank"
             >
               {icon}
             </Button>

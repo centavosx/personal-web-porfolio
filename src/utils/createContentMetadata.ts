@@ -1,39 +1,43 @@
 import { Metadata } from "next";
 import Supabase from "./supabase";
 import { getImageUrlFromExternal } from "./getImageFromExternal";
+import { notFound } from "next/navigation";
 
 export async function createContentMetadata(
   id: string,
   prefix: string,
   previousImages: string[] = []
 ): Promise<Metadata> {
-  const {
-    data: { name, description, featured_image_url },
-  } = Supabase.handleError(
-    await Supabase.content
-      .eq("id", id)
-      .select("name, description, featured_image_url")
-      .single(),
-    "Content should be available"
-  );
+  try {
+    const {
+      data: { name, description, featured_image_url },
+    } = Supabase.handleError(
+      await Supabase.content
+        .eq("id", id)
+        .select("name, description, featured_image_url")
+        .single()
+    );
 
-  const currentDescription = description || [prefix];
-  const descriptionFirstItem = currentDescription[0];
+    const currentDescription = description || [prefix];
+    const descriptionFirstItem = currentDescription[0];
 
-  const fullTitle = `${prefix} | ${name}`;
+    const fullTitle = `${prefix} | ${name}`;
 
-  return {
-    title: fullTitle,
-    description: descriptionFirstItem,
-    openGraph: {
+    return {
       title: fullTitle,
       description: descriptionFirstItem,
-      images: [
-        ...(featured_image_url
-          ? [getImageUrlFromExternal(featured_image_url)]
-          : []),
-        ...previousImages,
-      ],
-    },
-  };
+      openGraph: {
+        title: fullTitle,
+        description: descriptionFirstItem,
+        images: [
+          ...(featured_image_url
+            ? [getImageUrlFromExternal(featured_image_url)]
+            : []),
+          ...previousImages,
+        ],
+      },
+    };
+  } catch {
+    notFound();
+  }
 }

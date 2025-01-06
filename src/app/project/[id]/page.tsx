@@ -8,6 +8,11 @@ import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Supabase from "@/utils/supabase";
 import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
+import { notFound } from "next/navigation";
+
+export const revalidate = 28800;
+
+export const dynamicParams = true;
 
 export type ProjectProps = {
   params: Promise<{ id: string }>;
@@ -27,7 +32,7 @@ const Project = withContent<ProjectProps>(
   async ({ params, renderContent, sectionLinks }) => {
     const id = (await params).id;
     const { icon_url, name, description, content, status, date } =
-      await Supabase.getContentById(id);
+      await Supabase.getContentById(id).catch(() => notFound());
 
     sectionLinks.push({
       text: "Overview",
@@ -99,6 +104,10 @@ const Project = withContent<ProjectProps>(
 export default Project;
 
 export async function generateStaticParams() {
-  const contentIds = await Supabase.getContentIdsByType("project");
-  return contentIds;
+  try {
+    const contentIds = await Supabase.getContentIdsByType("project");
+    return contentIds;
+  } catch {
+    notFound();
+  }
 }

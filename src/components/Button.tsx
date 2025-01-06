@@ -24,6 +24,7 @@ export type ButtonProps = PropsWithChildren<
   {
     variant?: keyof typeof buttonVariantClasses;
     href?: string;
+    target?: string;
   } & ButtonHTMLAttributes<HTMLButtonElement>
 >;
 const Button = forwardRef(
@@ -43,7 +44,6 @@ const Button = forwardRef(
         ),
         ref,
         href,
-        target: "__blank",
       },
       children
     );

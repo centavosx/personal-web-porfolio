@@ -9,10 +9,15 @@ import Supabase from "@/utils/supabase";
 import { Metadata, ResolvingMetadata } from "next";
 
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export type WorkExperienceProps = {
   params: Promise<{ id: string }>;
 };
+
+export const revalidate = 28800;
+
+export const dynamicParams = true;
 
 export async function generateMetadata(
   { params }: WorkExperienceProps,
@@ -28,7 +33,7 @@ const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(
   async ({ params, renderContent, sectionLinks }) => {
     const id = (await params).id;
     const { icon_url, name, description, content, role, date } =
-      await Supabase.getContentById(id);
+      await Supabase.getContentById(id).catch(() => notFound());
 
     return (
       <>
