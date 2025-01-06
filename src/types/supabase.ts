@@ -23,6 +23,58 @@ export type Content = {
   status: Database["public"]["Enums"]["content_status_enum"] | null;
   type: Database["public"]["Enums"]["content_type_enum"] | null;
   is_featured: boolean;
+  about_id: string;
+};
+
+export type Service = {
+  id: string;
+  name: string;
+  description: string;
+  icon_url: string;
+  animation: Database["public"]["Enums"]["animation_enum"] | null;
+  created_at: string;
+  modified_at: string | null;
+  about_id: string;
+};
+
+export type Technology = {
+  id: string;
+  name: string;
+  icon_url: string;
+  link: string | null;
+  category: Database["public"]["Enums"]["tech_category_enum"];
+  is_core: boolean;
+  created_at: string;
+  modified_at: string | null;
+  about_id: string;
+};
+
+export type About = {
+  id: string;
+  overview: string;
+  short_description: string;
+  early_life: string;
+  goals: string;
+  created_at: string;
+  modified_at: string | null;
+};
+
+export type Address = {
+  about_id: string;
+  address: string;
+  created_at: string;
+  id: string;
+  modified_at: string | null;
+  type: string;
+};
+
+export type Link = {
+  about_id: string;
+  link: string;
+  created_at: string;
+  id: string;
+  modified_at: string | null;
+  type: string;
 };
 
 // Supabase generated types
@@ -57,8 +109,87 @@ export type Database = {
     Tables: {
       content: {
         Row: Content;
-        Insert: PartialExcept<Content, "name">;
+        Insert: PartialExcept<Content, "name" | "about_id">;
         Update: Partial<Content>;
+        Relationships: [
+          {
+            foreignKeyName: "content_about_id_fkey";
+            columns: ["about_id"];
+            isOneToOne: false;
+            referencedRelation: "about";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      service: {
+        Row: Service;
+        Insert: PartialExcept<
+          Service,
+          "name" | "description" | "icon_url" | "about_id"
+        >;
+        Update: Partial<Service>;
+        Relationships: [
+          {
+            foreignKeyName: "service_about_id_fkey";
+            columns: ["about_id"];
+            isOneToOne: false;
+            referencedRelation: "about";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      technology: {
+        Row: Technology;
+        Insert: PartialExcept<
+          Technology,
+          "name" | "icon_url" | "is_core" | "about_id"
+        >;
+        Update: Partial<Technology>;
+        Relationships: [
+          {
+            foreignKeyName: "technology_about_id_fkey";
+            columns: ["about_id"];
+            isOneToOne: false;
+            referencedRelation: "about";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      address: {
+        Row: Address;
+        Insert: PartialExcept<Address, "about_id" | "address" | "type">;
+        Update: Partial<Address>;
+        Relationships: [
+          {
+            foreignKeyName: "address_about_id_fkey";
+            columns: ["about_id"];
+            isOneToOne: false;
+            referencedRelation: "about";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      link: {
+        Row: Link;
+        Insert: PartialExcept<Link, "about_id" | "link" | "type">;
+        Update: Partial<Link>;
+        Relationships: [
+          {
+            foreignKeyName: "link_about_id_fkey";
+            columns: ["about_id"];
+            isOneToOne: false;
+            referencedRelation: "about";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      about: {
+        Row: About;
+        Insert: PartialExcept<
+          About,
+          "short_description" | "early_life" | "goals" | "overview"
+        >;
+        Update: Partial<About>;
         Relationships: [];
       };
     };
@@ -71,6 +202,21 @@ export type Database = {
     Enums: {
       content_status_enum: "pending" | "completed" | "hold" | "dropped";
       content_type_enum: "project" | "work-experience";
+      animation_enum: "spin" | "wiggle-more";
+      tech_category_enum:
+        | "language"
+        | "automation"
+        | "cicd"
+        | "cloud"
+        | "database"
+        | "design"
+        | "documentation"
+        | "frameworks"
+        | "re"
+        | "state"
+        | "styling"
+        | "tests"
+        | "web3";
     };
     CompositeTypes: {
       [_ in never]: never;

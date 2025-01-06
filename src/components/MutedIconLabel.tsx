@@ -1,6 +1,7 @@
 import { HTMLAttributes, ReactNode } from "react";
 import Text, { TextProps, TextVariantsElements } from "./Text";
 import { extendClassByProp } from "@/utils/extendClassByProp";
+import Image from "next/image";
 
 const animationClass = {
   spin: "group-hover:animate-spin",
@@ -10,18 +11,20 @@ const animationClass = {
 export type MutedIconLabelProps<K extends keyof TextVariantsElements = "h1"> =
   Omit<TextProps<K>, "children"> & {
     label: string;
-    mutedIcon: ReactNode;
+    mutedIconUri: string;
     description?: string;
     containerProps?: HTMLAttributes<HTMLElement>;
     hoverAnimation?: keyof typeof animationClass;
+    iconAlt?: string;
   };
 const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
   as,
-  mutedIcon,
+  mutedIconUri,
   description,
   containerProps,
   label,
   hoverAnimation = "spin",
+  iconAlt,
   ...rest
 }: MutedIconLabelProps<K>) => {
   return (
@@ -35,7 +38,12 @@ const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
         <div
           className={`-z-10 opacity-10 animate-duration-[1.5s] animate-none ${animationClass[hoverAnimation]} animate-infinite`}
         >
-          {mutedIcon}
+          <Image
+            src={mutedIconUri}
+            height={50}
+            width={50}
+            alt={`${iconAlt ? `${iconAlt} ` : ""}image`}
+          />
         </div>
         <div className="px-4 absolute self-center">
           <Text<keyof TextVariantsElements>
