@@ -5,7 +5,7 @@ export class Space {
   height!: number;
   blackHoleRadiusMultiplier = 1;
   blackHoleCount = 0;
-  maxStarCountInBlackhole = 150;
+  maxStarCountInBlackhole = 100;
 
   mouseX = -100;
   mouseY = -100;
@@ -16,37 +16,19 @@ export class Space {
 
   getMaxDistance() {
     if (this.width < 480) return 30;
-    if (this.width < 1280) return 50;
-    return 60;
+    if (this.width < 1280) return 40;
+    return 50;
   }
 
   getNumberOfStars() {
     if (this.width < 480) return 400;
-    if (this.width < 768) return 600;
-    if (this.width < 976) return 800;
-    if (this.width < 1280) return 1500;
-    return 2500;
+    if (this.width < 1280) return 800;
+    return 1000;
   }
 
   updateCursor(mouseX: number, mouseY: number) {
     this.mouseX = mouseX;
     this.mouseY = mouseY;
-  }
-
-  increaseBlackHoleRadius() {
-    if (this.blackHoleRadiusMultiplier < 2) {
-      this.blackHoleRadiusMultiplier += 0.1;
-      this.maxStarCountInBlackhole += 3;
-      return;
-    }
-  }
-
-  decreaseBlackHoleRadius() {
-    if (this.blackHoleRadiusMultiplier > 1) {
-      this.blackHoleRadiusMultiplier -= 0.1;
-      this.maxStarCountInBlackhole += 3;
-      return;
-    }
   }
 
   moveAndDrawStars() {

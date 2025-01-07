@@ -1,3 +1,4 @@
+"use client";
 import { HTMLAttributes } from "react";
 import Text, { TextProps, TextVariantsElements } from "./Text";
 import { extendClassByProp } from "@/utils/extendClassByProp";
@@ -36,7 +37,7 @@ const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
     >
       <div className="flex">
         <div
-          className={`-z-10 opacity-10 animate-duration-[1.5s] animate-none ${animationClass[hoverAnimation]} animate-infinite`}
+          className={`-z-10 opacity-10 animate-duration-[1.5s] animate-bounce`}
         >
           <Image
             src={mutedIconUri}

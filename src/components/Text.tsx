@@ -20,12 +20,12 @@ const textColorClass = {
 } as const;
 
 const textSizes = {
-  xs: "text-xs",
-  sm: "text-sm",
-  md: "text-md md:text-xl",
-  lg: "text-xl md:text-3xl",
-  xl: "text-2xl md:text-4xl",
-  xxl: "text-5xl md:text-7xl",
+  xs: "text-xs lg:text-sm",
+  sm: "text-sm lg:text-md",
+  md: "text-md md:text-xl lg:text-2xl",
+  lg: "text-xl md:text-2xl lg:text-3xl",
+  xl: "text-2xl md:text-3xl lg:text-4xl",
+  xxl: "text-4xl md:text-5xl lg:text-7xl",
 };
 
 export type TextSize = keyof typeof textSizes;

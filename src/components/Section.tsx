@@ -63,7 +63,7 @@ const Section = forwardRef(
           {...extendClassByProp(
             containerProps || {},
             "flex justify-center relative h-full w-full",
-            isTransparentBg ? "" : "bg-radial-gradient dark:bg-dark-linear"
+            isTransparentBg ? "" : "bg-radial-gradient dark:transparent"
           )}
         >
           {background}

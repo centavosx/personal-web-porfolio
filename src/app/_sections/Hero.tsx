@@ -43,7 +43,7 @@ const Hero = ({ links }: HeroProps) => {
       >
         Software Developer
       </Text>
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap">
         {links.map((value, index) => {
           const type = value.type;
           const icon = icons[type as keyof typeof icons];

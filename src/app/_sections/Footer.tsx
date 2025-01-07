@@ -31,39 +31,43 @@ const Footer = async ({ isDark }: FooterProps) => {
       }`}
     >
       <div className="2xl:container flex-1 relative flex flex-col gap-4 z-10 px-10 py-20">
-        <div className="items-start xsm:items-start flex flex-col xsm:flex-row gap-8">
-          <Image
-            src={isDark ? "/svg/main-logo-dark.svg" : "/svg/main-logo.svg"}
-            height={55}
-            width={55}
-            alt="main logo"
-          />
-          <div className="flex flex-col gap-4">
-            <Text className="font-montserrat" size="xs">
-              @2025 Vincent Lennuel Llanto All Rights Reserved.
-            </Text>
-            <div className="flex flex-row gap-4">
-              {contactLinks.map((value, index) => {
-                const type = value.type as keyof typeof contactLinkIcon;
-                const icon = contactLinkIcon[type];
+        <div className="items-start xsm:items-start flex flex-col md:flex-row gap-12 justify-between">
+          <div className="xsm:items-start flex flex-col xsm:flex-row gap-8 ">
+            <Image
+              src={isDark ? "/svg/main-logo-dark.svg" : "/svg/main-logo.svg"}
+              height={55}
+              width={55}
+              alt="main logo"
+            />
+            <div className="flex flex-col gap-4">
+              <Text className="font-montserrat" size="xs">
+                © 2025 Vincent Lennuel Llanto All Rights Reserved.
+              </Text>
+              <div className="flex flex-row gap-4">
+                {contactLinks.map((value, index) => {
+                  const type = value.type as keyof typeof contactLinkIcon;
+                  const icon = contactLinkIcon[type];
 
-                if (!icon) return null;
+                  if (!icon) return null;
 
-                return (
-                  <a
-                    key={`${value.id}_${index}`}
-                    href={value.link}
-                    aria-label={type}
-                  >
-                    {icon}
-                  </a>
-                );
-              })}
+                  return (
+                    <a
+                      key={`${value.id}_${index}`}
+                      href={value.link}
+                      aria-label={type}
+                    >
+                      {icon}
+                    </a>
+                  );
+                })}
+              </div>
             </div>
+          </div>
+          <div className=" ustify-end">
             {!!address.length && (
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex flex-col gap-2">
                 <Text className="font-montserrat" size="xs">
-                  Donate a coffee -
+                  Donate a coffee.
                 </Text>
                 <div className="flex flex-col gap-4">
                   {address.map((value, index) => {

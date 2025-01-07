@@ -20,6 +20,7 @@ export default {
   ],
   darkMode: "class",
   safelist: [
+    "animate-reverse",
     "list-disc",
     "list-decimal",
     "list-inside",
@@ -87,7 +88,7 @@ export default {
             transform: "scale(1)",
           },
           "50%": {
-            transform: "scale(0.5)",
+            transform: "scale(0.8)",
           },
           "100%": {
             transform: "scale(1)",
@@ -139,7 +140,7 @@ export default {
         overlay: "rgba(0, 0, 0, 0.5)",
         background: "#d1cec7",
       },
-      backgroundColor: {
+      backgroundImage: {
         "radial-gradient":
           "radial-gradient(50% 50% at 50% 50%, rgba(26, 21, 21, 0) 0%, rgba(1, 1, 1, 0.16) 100%)",
         "dark-linear":

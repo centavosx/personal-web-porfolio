@@ -80,7 +80,7 @@ const CoreTech = async () => {
                   <Text
                     className="font-montserrat uppercase sm:font-light group-hover/icon:font-bold transition-all"
                     as="h1"
-                    size="md"
+                    size="sm"
                   >
                     {value.name}
                   </Text>
