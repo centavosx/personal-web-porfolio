@@ -20,7 +20,6 @@ export default {
   ],
   darkMode: "class",
   safelist: [
-    "animate-reverse",
     "list-disc",
     "list-decimal",
     "list-inside",
@@ -70,34 +69,6 @@ export default {
     extend: {
       screens: {
         xsm: "480px",
-      },
-      keyframes: {
-        "pulse-full": {
-          "0%": {
-            opacity: "1",
-          },
-          "50%": {
-            opacity: "0",
-          },
-          "100%": {
-            opacity: "1",
-          },
-        },
-        beat: {
-          "0%": {
-            transform: "scale(1)",
-          },
-          "50%": {
-            transform: "scale(0.8)",
-          },
-          "100%": {
-            transform: "scale(1)",
-          },
-        },
-      },
-      animation: {
-        "pulse-full": "pulse-full 1s ease-in-out infinite",
-        beat: "beat 1s ease-in-out infinite",
       },
       colors: {
         primary: "#1A1A1A",
