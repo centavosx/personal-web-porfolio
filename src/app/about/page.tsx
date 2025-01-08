@@ -40,7 +40,7 @@ const About = async () => {
         </InView.Text>
       </Section>
       <Section
-        description={data.short_description}
+        description={data.overview}
         moreButton={{
           hidden: true,
         }}
