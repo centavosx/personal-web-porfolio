@@ -3,7 +3,7 @@ import Image from "next/image";
 import MailIcon from "../../../public/svg/mail.svg";
 import LinkedInCharIcon from "../../../public/svg/linkedin-character.svg";
 import Supabase from "@/utils/supabase";
-import { InViewContainer } from "@/components/InViewContainer";
+import InView from "@/components/InView";
 
 const contactLinkIcon = {
   email: <MailIcon className="dark:fill-secondary" height={25} width={25} />,
@@ -33,7 +33,7 @@ const Footer = async ({ isDark }: FooterProps) => {
     >
       <div className="2xl:container flex-1 relative flex flex-col gap-4 z-10 px-10 py-20">
         <div className="items-start xsm:items-start flex flex-col md:flex-row gap-12 justify-between">
-          <InViewContainer className="xsm:items-start flex flex-col xsm:flex-row gap-8 ">
+          <InView.Container className="xsm:items-start flex flex-col xsm:flex-row gap-8 ">
             <Image
               src={isDark ? "/svg/main-logo-dark.svg" : "/svg/main-logo.svg"}
               height={55}
@@ -63,8 +63,8 @@ const Footer = async ({ isDark }: FooterProps) => {
                 })}
               </div>
             </div>
-          </InViewContainer>
-          <InViewContainer animate="right">
+          </InView.Container>
+          <InView.Container animate="right">
             {!!address.length && (
               <div className="flex flex-col gap-2">
                 <Text className="font-montserrat" size="xs">
@@ -86,7 +86,7 @@ const Footer = async ({ isDark }: FooterProps) => {
                 </div>
               </div>
             )}
-          </InViewContainer>
+          </InView.Container>
         </div>
       </div>
     </footer>

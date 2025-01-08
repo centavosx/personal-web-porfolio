@@ -4,12 +4,11 @@ import Text from "@/components/Text";
 import Supabase from "@/utils/supabase";
 import { Technology } from "@/types/supabase";
 import Image from "next/image";
-import { InViewContainer } from "@/components/InViewContainer";
+import InView from "@/components/InView";
 
 type CoreTechDataType = {
   label: string;
   icon: string;
-  animation: "wiggle-more" | "spin";
   data: Technology[];
 };
 
@@ -17,17 +16,14 @@ const CORE_TECH_DATA: Record<string, Omit<CoreTechDataType, "data">> = {
   language: {
     label: "Language",
     icon: "/svg/languages/code.svg",
-    animation: "wiggle-more",
   },
   frameworks: {
     label: "Framework",
     icon: "/svg/frameworks/cpu.svg",
-    animation: "wiggle-more",
   },
   database: {
     label: "Database",
     icon: "/svg/database/database.svg",
-    animation: "wiggle-more",
   },
 };
 
@@ -51,7 +47,7 @@ const CoreTech = async () => {
     <Section id="tech" title="Core Technologies">
       <div className="flex flex-col gap-16">
         {coreTechs.map((tech, index) => (
-          <InViewContainer
+          <InView.Container
             animate={index % 2 === 0 ? "left" : "right"}
             className="flex flex-col gap-10 group"
             key={`${tech.label}_${index}`}
@@ -63,7 +59,6 @@ const CoreTech = async () => {
               }}
               mutedIconUri={tech.icon}
               iconAlt={tech.label}
-              hoverAnimation={tech.animation}
             />
             <div className="flex flex-col sm:flex-row flex-1 flex-wrap gap-12">
               {tech.data?.map((value, dataIndex) => (
@@ -89,7 +84,7 @@ const CoreTech = async () => {
                 </div>
               ))}
             </div>
-          </InViewContainer>
+          </InView.Container>
         ))}
       </div>
     </Section>

@@ -1,8 +1,8 @@
 import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
-import Text from "@/components/Text";
 import Footer from "../_sections/Footer";
 import Supabase from "@/utils/supabase";
+import InView from "@/components/InView";
 
 const links = [
   {
@@ -29,15 +29,15 @@ const About = async () => {
       <Navigation pageUrl="/about" links={links} />
       <Section
         containerProps={{
-          className: "dark overflow-hidden pt-56 md",
+          className: "dark pt-56 md",
         }}
-        className="overflow-hidden self-center justify-end transition-all"
+        className="self-center justify-end transition-all"
         isDark
         isTransparentBg
       >
-        <Text as="h1" className="font-raleway font-bold" size="xxl">
+        <InView.Text as="h1" className="font-raleway font-bold" size="xxl">
           About me
-        </Text>
+        </InView.Text>
       </Section>
       <Section
         description={data.short_description}
@@ -54,9 +54,13 @@ const About = async () => {
         withPadding={false}
       >
         {data.early_life.split("\n\n").map((value, index) => (
-          <Text key={`earlyLife_${index}`} className="font-light">
+          <InView.Text
+            key={`earlyLife_${index}`}
+            className="font-light"
+            delay={index * 200}
+          >
             {value}
-          </Text>
+          </InView.Text>
         ))}
       </Section>
       <Section
@@ -66,9 +70,13 @@ const About = async () => {
         withPadding={false}
       >
         {data.goals.split("\n\n").map((value, index) => (
-          <Text key={`missionAndVision_${index}`} className="font-light">
+          <InView.Text
+            animate="bottom"
+            key={`missionAndVision_${index}`}
+            className="font-light"
+          >
             {value}
-          </Text>
+          </InView.Text>
         ))}
       </Section>
       <Footer isDark />

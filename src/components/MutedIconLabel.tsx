@@ -1,13 +1,9 @@
 "use client";
+
 import { HTMLAttributes } from "react";
 import Text, { TextProps, TextVariantsElements } from "./Text";
 import { extendClassByProp } from "@/utils/extendClassByProp";
 import Image from "next/image";
-
-const animationClass = {
-  spin: "group-hover:animate-spin",
-  "wiggle-more": "group-hover:animate-wiggle-more",
-};
 
 export type MutedIconLabelProps<K extends keyof TextVariantsElements = "h1"> =
   Omit<TextProps<K>, "children"> & {
@@ -15,7 +11,6 @@ export type MutedIconLabelProps<K extends keyof TextVariantsElements = "h1"> =
     mutedIconUri: string;
     description?: string;
     containerProps?: HTMLAttributes<HTMLElement>;
-    hoverAnimation?: keyof typeof animationClass;
     iconAlt?: string;
   };
 const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
@@ -24,7 +19,6 @@ const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
   description,
   containerProps,
   label,
-  hoverAnimation = "spin",
   iconAlt,
   ...rest
 }: MutedIconLabelProps<K>) => {

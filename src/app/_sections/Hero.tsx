@@ -1,13 +1,12 @@
 "use client";
 
-import Button from "@/components/Button";
 import Section from "@/components/Section";
-import Text from "@/components/Text";
 import { Link } from "@/types/supabase";
 import CodewarsIcon from "../../../public/svg/codewars.svg";
 import EmailIcon from "../../../public/svg/email.svg";
 import GithubIcon from "../../../public/svg/github.svg";
 import LinkedInIcon from "../../../public/svg/linkedin.svg";
+import InView from "@/components/InView";
 
 const icons = {
   email: <EmailIcon height={37} width={37} />,
@@ -29,40 +28,56 @@ const Hero = ({ links }: HeroProps) => {
       isDark
       isTransparentBg
     >
-      <Text as="h1" className="font-raleway font-bold" size="xl">
+      <InView.Text
+        as="h1"
+        className="font-raleway font-bold"
+        size="xl"
+        animate="top"
+      >
         Hi! I am,
-      </Text>
-      <Text as="h1" className="font-raleway font-bold" size="xxl">
+      </InView.Text>
+      <InView.Text
+        as="h1"
+        className="font-raleway font-bold"
+        size="xxl"
+        delay={500}
+      >
         Vincent Lennuel Llanto
-      </Text>
-      <Text
+      </InView.Text>
+      <InView.Text
         as="h1"
         className="font-raleway font-bold"
         size="lg"
         color="tertiary"
+        delay={800}
+        animate="bottom"
       >
         Software Developer
-      </Text>
+      </InView.Text>
       <div className="flex gap-4 flex-wrap">
-        {links.map((value, index) => {
-          const type = value.type;
-          const icon = icons[type as keyof typeof icons];
+        {links
+          .filter((value) => !!icons[value.type as keyof typeof icons])
+          .map((value, index) => {
+            const type = value.type;
+            const icon = icons[type as keyof typeof icons];
 
-          if (!icon) return null;
+            const delay = index > 0 ? 800 : 1000;
 
-          return (
-            <Button
-              key={`${value.id}_${index}`}
-              variant="icon"
-              href={value.link}
-              className="py-1 px-1"
-              aria-label={`Check my ${value.type}`}
-              target="__blank"
-            >
-              {icon}
-            </Button>
-          );
-        })}
+            return (
+              <InView.Button
+                key={`${value.id}_${index}`}
+                variant="icon"
+                href={value.link}
+                className="py-1 px-1"
+                aria-label={`Check my ${value.type}`}
+                target="__blank"
+                delay={(index + 1) * delay}
+                animate="scaleUp"
+              >
+                {icon}
+              </InView.Button>
+            );
+          })}
       </div>
     </Section>
   );

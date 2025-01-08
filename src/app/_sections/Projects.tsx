@@ -3,7 +3,7 @@ import Image from "next/image";
 import Section from "@/components/Section";
 import { Content } from "@/types/supabase";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
-import { InViewContainer } from "@/components/InViewContainer";
+import InView from "@/components/InView";
 
 const OPTIONS = { loop: true };
 
@@ -26,7 +26,7 @@ const Projects = ({ data }: ProjectsProps) => {
       isDark
       containerProps={{}}
     >
-      <InViewContainer animate="bottom">
+      <InView.Container animate="bottom">
         <EmblaCarousel
           slides={filteredImages.map((value, index) => ({
             name: value.name,
@@ -44,7 +44,7 @@ const Projects = ({ data }: ProjectsProps) => {
           }))}
           options={OPTIONS}
         />
-      </InViewContainer>
+      </InView.Container>
     </Section>
   );
 };

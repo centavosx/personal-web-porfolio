@@ -8,7 +8,7 @@ import {
 import { extendClassByProp } from "@/utils/extendClassByProp";
 import Text, { TextProps } from "./Text";
 import Button, { ButtonProps } from "./Button";
-import { InViewContainer } from "./InViewContainer";
+import InView from "@/components/InView";
 
 export type SectionProps = PropsWithChildren<
   HTMLAttributes<HTMLElement> & {
@@ -80,7 +80,7 @@ const Section = forwardRef(
             )}
           >
             {!!title && (
-              <InViewContainer {...titleContainerProps}>
+              <InView.Container {...titleContainerProps}>
                 <Text
                   className="font-montserrat font-bold tracking-[0.25em] uppercase mb-6"
                   as="h1"
@@ -89,10 +89,10 @@ const Section = forwardRef(
                 >
                   {title}
                 </Text>
-              </InViewContainer>
+              </InView.Container>
             )}
             {!!description && (
-              <InViewContainer
+              <InView.Container
                 animate="bottom"
                 {...extendClassByProp(
                   descriptionContainerProps || {},
@@ -112,7 +112,7 @@ const Section = forwardRef(
                     More
                   </Button>
                 )}
-              </InViewContainer>
+              </InView.Container>
             )}
             {children}
           </div>

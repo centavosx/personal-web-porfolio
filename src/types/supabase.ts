@@ -31,7 +31,6 @@ export type Service = {
   name: string;
   description: string;
   icon_url: string;
-  animation: Database["public"]["Enums"]["animation_enum"] | null;
   created_at: string;
   modified_at: string | null;
   about_id: string;
@@ -202,7 +201,6 @@ export type Database = {
     Enums: {
       content_status_enum: "pending" | "completed" | "hold" | "dropped";
       content_type_enum: "project" | "work-experience";
-      animation_enum: "spin" | "wiggle-more";
       tech_category_enum:
         | "language"
         | "automation"

@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
-import { InViewContainer } from "@/components/InViewContainer";
+import InView from "@/components/InView";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
 import { Content } from "@/types/supabase";
@@ -87,20 +87,21 @@ const WorkExperience = ({ data }: WorkExperienceProps) => {
       }}
     >
       {!!icon_url && (
-        <InViewContainer
-          animate="scale"
-          className="absolute md:right-[8rem] top-[35%] opacity-20 -z-10 self-center"
+        <InView.Container
+          animate="top"
+          className="absolute md:right-[8rem] top-[35%] -z-10 self-center"
+          inViewClassName="opacity-20"
         >
           <Image
-            className="scale-[4.5] "
+            className="scale-[4.5]"
             src={getImageUrlFromExternal(icon_url)}
             width={65}
             height={51}
             alt="company-logo"
           />
-        </InViewContainer>
+        </InView.Container>
       )}
-      <InViewContainer
+      <InView.Container
         className="pb-10 md:pr-[24rem] gap-6 flex flex-col"
         animate="bottom"
       >
@@ -130,7 +131,7 @@ const WorkExperience = ({ data }: WorkExperienceProps) => {
             </Button>
           </div>
         </div>
-      </InViewContainer>
+      </InView.Container>
     </Section>
   );
 };

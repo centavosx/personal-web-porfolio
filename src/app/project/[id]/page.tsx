@@ -1,7 +1,7 @@
 import Footer from "@/app/_sections/Footer";
+import InView from "@/components/InView";
 import Navigation from "@/components/Navigation";
 import Section from "@/components/Section";
-import Text from "@/components/Text";
 import { withContent } from "@/hoc/withContent";
 import { createContentMetadata } from "@/utils/createContentMetadata";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
@@ -45,42 +45,52 @@ const Project = withContent<ProjectProps>(
         <Navigation pageUrl={`/project/${id}`} links={sectionLinks} />
         <Section
           containerProps={{
-            className: "dark overflow-hidden md",
+            className: "dark md",
           }}
-          className="overflow-hidden self-center justify-end transition-all h-full pt-56"
+          className="self-center justify-end transition-all h-full pt-56"
           isDark
           isTransparentBg
         >
           {!!icon_url && (
-            <Image
+            <InView.Image
               className="scale-[4.5] absolute md:right-[8rem] top-[35%] opacity-20 -z-10 self-center bottom-10"
               src={getImageUrlFromExternal(icon_url)}
               width={65}
               height={51}
               alt="company-logo"
+              animate="right"
             />
           )}
-          <Text as="h1" className="font-raleway font-bold" size="xxl">
+          <InView.Text
+            as="h1"
+            className="font-raleway font-bold"
+            size="xxl"
+            animate="top"
+          >
             {name}
-          </Text>
+          </InView.Text>
           {!!date && (
-            <Text
+            <InView.Text
               as="h2"
               className="font-raleway font-bold"
               size="lg"
               color="tertiary"
+              animate="left"
+              delay={400}
             >
               {date}
-            </Text>
+            </InView.Text>
           )}
-          <Text
+          <InView.Text
             as="h3"
             className="font-raleway font-bold uppercase"
             size="md"
             color="tertiary"
+            animate="bottom"
+            delay={800}
           >
             {status}
-          </Text>
+          </InView.Text>
         </Section>
         <Section
           className="pt-20 pb-10 px-10"
@@ -89,9 +99,9 @@ const Project = withContent<ProjectProps>(
           id="overview"
         >
           {description?.map((value, index) => (
-            <Text className="font-light" key={`description_${index}`}>
+            <InView.Text className="font-light" key={`description_${index}`}>
               {value}
-            </Text>
+            </InView.Text>
           ))}
         </Section>
         {content && renderContent("content", content)}

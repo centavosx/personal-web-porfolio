@@ -10,6 +10,7 @@ import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Image from "next/image";
 import { ComponentType, Fragment, ReactNode } from "react";
 import { ImageConst } from "@/constants/image";
+import InView from "@/components/InView";
 
 export type WithContentExtendedProps = {
   renderContent: (
@@ -120,7 +121,12 @@ export const withContent = <P extends Record<string, unknown>>(
                 size: titleTextSize,
               }}
             >
-              {item}
+              <InView.Container
+                className="flex-1 relative flex flex-col gap-4"
+                animate="bottom"
+              >
+                {item}
+              </InView.Container>
             </Section>
           );
         case "bullet":
@@ -177,7 +183,7 @@ export const withContent = <P extends Record<string, unknown>>(
           );
         case "flex":
           return (
-            <div
+            <InView.Container
               key={key}
               {...extendClassByProp(
                 {},
@@ -199,7 +205,7 @@ export const withContent = <P extends Record<string, unknown>>(
               >
                 {item}
               </div>
-            </div>
+            </InView.Container>
           );
 
         default:
