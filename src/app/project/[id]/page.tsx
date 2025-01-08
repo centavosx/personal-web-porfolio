@@ -7,7 +7,6 @@ import { createContentMetadata } from "@/utils/createContentMetadata";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Supabase from "@/utils/supabase";
 import { Metadata, ResolvingMetadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
 export const revalidate = 28800;
