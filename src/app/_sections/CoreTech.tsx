@@ -4,6 +4,7 @@ import Text from "@/components/Text";
 import Supabase from "@/utils/supabase";
 import { Technology } from "@/types/supabase";
 import Image from "next/image";
+import { InViewContainer } from "@/components/InViewContainer";
 
 type CoreTechDataType = {
   label: string;
@@ -50,7 +51,8 @@ const CoreTech = async () => {
     <Section id="tech" title="Core Technologies">
       <div className="flex flex-col gap-16">
         {coreTechs.map((tech, index) => (
-          <div
+          <InViewContainer
+            animate={index % 2 === 0 ? "left" : "right"}
             className="flex flex-col gap-10 group"
             key={`${tech.label}_${index}`}
           >
@@ -87,7 +89,7 @@ const CoreTech = async () => {
                 </div>
               ))}
             </div>
-          </div>
+          </InViewContainer>
         ))}
       </div>
     </Section>

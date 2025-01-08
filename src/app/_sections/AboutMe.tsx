@@ -1,6 +1,7 @@
 import Section from "@/components/Section";
 import MutedIconLabel from "@/components/MutedIconLabel";
 import Supabase from "@/utils/supabase";
+import { InViewContainer } from "@/components/InViewContainer";
 
 export type AboutMeProps = {
   shortDescription: string;
@@ -17,7 +18,10 @@ const AboutMe = async ({ shortDescription }: AboutMeProps) => {
         moreButton={{ href: "/about" }}
       />
       <Section title="What I offer?">
-        <div className="flex flex-row gap-8 xl:gap-24 relative justify-around flex-wrap">
+        <InViewContainer
+          animate="bottom"
+          className="flex flex-row gap-8 xl:gap-24 relative justify-around flex-wrap"
+        >
           {services.map((value, index) => (
             <MutedIconLabel
               key={`${value.id}_${index}`}
@@ -31,7 +35,7 @@ const AboutMe = async ({ shortDescription }: AboutMeProps) => {
               hoverAnimation={value.animation || undefined}
             />
           ))}
-        </div>
+        </InViewContainer>
       </Section>
     </>
   );

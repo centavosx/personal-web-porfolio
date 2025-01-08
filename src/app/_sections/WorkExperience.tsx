@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import { InViewContainer } from "@/components/InViewContainer";
 import Section from "@/components/Section";
 import Text from "@/components/Text";
 import { Content } from "@/types/supabase";
@@ -86,15 +87,23 @@ const WorkExperience = ({ data }: WorkExperienceProps) => {
       }}
     >
       {!!icon_url && (
-        <Image
-          className="scale-[4.5] absolute md:right-[8rem] top-[35%] opacity-20 -z-10 self-center"
-          src={getImageUrlFromExternal(icon_url)}
-          width={65}
-          height={51}
-          alt="company-logo"
-        />
+        <InViewContainer
+          animate="scale"
+          className="absolute md:right-[8rem] top-[35%] opacity-20 -z-10 self-center"
+        >
+          <Image
+            className="scale-[4.5] "
+            src={getImageUrlFromExternal(icon_url)}
+            width={65}
+            height={51}
+            alt="company-logo"
+          />
+        </InViewContainer>
       )}
-      <div className="pb-10 md:pr-[24rem] gap-6 flex flex-col">
+      <InViewContainer
+        className="pb-10 md:pr-[24rem] gap-6 flex flex-col"
+        animate="bottom"
+      >
         <Text className="font-light">{shortDescription}</Text>
         <div className="flex flex-col justify-between sm:flex-row gap-8">
           <Button
@@ -121,7 +130,7 @@ const WorkExperience = ({ data }: WorkExperienceProps) => {
             </Button>
           </div>
         </div>
-      </div>
+      </InViewContainer>
     </Section>
   );
 };
