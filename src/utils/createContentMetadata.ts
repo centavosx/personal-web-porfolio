@@ -29,12 +29,9 @@ export async function createContentMetadata(
       openGraph: {
         title: fullTitle,
         description: descriptionFirstItem,
-        images: [
-          ...(featured_image_url
-            ? [getImageUrlFromExternal(featured_image_url)]
-            : []),
-          ...previousImages,
-        ],
+        images: featured_image_url
+          ? [getImageUrlFromExternal(featured_image_url)]
+          : previousImages,
       },
     };
   } catch {
