@@ -2,7 +2,6 @@
 
 import { ImageConst } from "@/constants/image";
 import { extendClassByProp } from "@/utils/extendClassByProp";
-import { useDragControls } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useEffect, useRef } from "react";
 
@@ -15,7 +14,6 @@ export type ImageStackProps = {
   width: number;
 };
 const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
-  const controls = useDragControls();
   const intervalIdRef = useRef<NodeJS.Timeout>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const imageEls = useRef<HTMLDivElement[]>([]);
@@ -93,11 +91,7 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
     throw new Error("Maximum image stack is six!");
 
   return (
-    <div
-      ref={divRef}
-      className="relative transition-all flex"
-      onPointerDown={(event) => controls.start(event, { snapToCursor: true })}
-    >
+    <div ref={divRef} className="relative transition-all flex">
       <div className="relative self-center flex flex-1">
         {srcs.map((src, index) => (
           // TODO: Implement swipe to change
@@ -122,7 +116,6 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
                   }px]`,
               "after:top-0 after:absolute after:rounded-md after:h-full after:w-full transition-all duration-300"
             )}
-            style={{ touchAction: "none" }}
             onClick={handleClick(index)}
             onMouseEnter={() => {
               if (intervalIdRef.current !== null)

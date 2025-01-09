@@ -3,12 +3,6 @@ import { Star } from "./star";
 export class Space {
   width!: number;
   height!: number;
-  blackHoleRadiusMultiplier = 1;
-  blackHoleCount = 0;
-  maxStarCountInBlackhole = 100;
-
-  mouseX = -100;
-  mouseY = -100;
 
   stars: Star[] = [];
 
@@ -21,9 +15,9 @@ export class Space {
   }
 
   getNumberOfStars() {
-    if (this.width < 480) return 400;
-    if (this.width < 1280) return 800;
-    return 1000;
+    if (this.width < 480) return 300;
+    if (this.width < 1280) return 600;
+    return 800;
   }
 
   moveAndDrawStars() {
@@ -44,12 +38,7 @@ export class Space {
     const numberOfStars = this.getNumberOfStars();
 
     for (let i = 0; i < numberOfStars; i++) {
-      const star = new Star(
-        this.context,
-        this.height,
-        this.width,
-        this.getMaxDistance()
-      );
+      const star = new Star(this.context, this.height, this.width);
       newStars.push(star);
     }
 

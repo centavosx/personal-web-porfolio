@@ -12,6 +12,7 @@ export type MutedIconLabelProps<K extends keyof TextVariantsElements = "h1"> =
     description?: string;
     containerProps?: HTMLAttributes<HTMLElement>;
     iconAlt?: string;
+    darkSrc?: string;
   };
 const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
   as,
@@ -20,6 +21,7 @@ const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
   containerProps,
   label,
   iconAlt,
+  darkSrc,
   ...rest
 }: MutedIconLabelProps<K>) => {
   return (
@@ -33,12 +35,17 @@ const MutedIconLabel = <K extends keyof TextVariantsElements = "h1">({
         <div
           className={`-z-10 opacity-10 animate-duration-[1.5s] animate-bounce`}
         >
-          <Image
-            src={mutedIconUri}
-            height={50}
-            width={50}
-            alt={`${iconAlt ? `${iconAlt} ` : ""}image`}
-          />
+          <picture>
+            {!!darkSrc && (
+              <source srcSet={darkSrc} media="(prefers-color-scheme: dark)" />
+            )}
+            <Image
+              src={mutedIconUri}
+              height={50}
+              width={50}
+              alt={`${iconAlt ? `${iconAlt} ` : ""}image`}
+            />
+          </picture>
         </div>
         <div className="px-4 absolute self-center">
           <Text<keyof TextVariantsElements>

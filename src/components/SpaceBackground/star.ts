@@ -39,7 +39,7 @@ export class Star {
     this.g = Math.floor((color1.g + color2.g) / 2);
     this.b = Math.floor((color1.b + color2.b) / 2);
 
-    this.speed = (Math.random() * 100 < 50 ? 1 : -1) * 0.02;
+    this.speed = (Math.random() * 100 < 50 ? 1 : -1) * 0.08;
     this.size = Math.random() * 2 + 1;
 
     this.updateContext(containerHeight, containerWidth);

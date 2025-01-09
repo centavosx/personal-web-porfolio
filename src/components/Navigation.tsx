@@ -65,7 +65,7 @@ const Navigation = ({ pageUrl = "/", links }: NavigationProps) => {
         activeHash ? "bg-[rgba(255,255,255,0.4)]" : "dark"
       }`}
     >
-      <div className="2xl:container flex flex-row justify-between w-full py-8 px-10">
+      <div className="2xl:container flex flex-row justify-between w-full px-8 py-6 md:py-8 md:px-10">
         <Link href="#" onClick={handleLogoLinkClick} scroll={false}>
           <Image
             className="z-[99]"
@@ -81,8 +81,8 @@ const Navigation = ({ pageUrl = "/", links }: NavigationProps) => {
         />
         <div
           className={`${
-            isOpen ? "translate-x-0" : "translate-x-[100vw]"
-          } flex justify-between md:self-center items-center transition-all fixed h-screen w-full z-10 bg-[rgba(255,255,255,0.7)] dark:bg-[rgba(0,0,0,0.7)] -ml-[2.5rem] -mt-[2rem] px-10 py-10 md:ml-0 md:px-0 md:py-0 md:w-auto md:h-auto md:relative md:mt-0 md:bg-transparent md:dark:bg-transparent md:translate-x-0`}
+            isOpen ? "translate-x-0" : "translate-x-[100vw] touch-none"
+          } flex justify-between md:self-center items-center transition-all fixed h-screen w-full z-10 bg-[rgba(255,255,255,0.7)] dark:bg-[rgba(0,0,0,0.7)] -ml-[1.99rem] -mt-[1.5rem] px-10 py-10 md:ml-0 md:px-0 md:py-0 md:w-auto md:h-auto md:relative md:mt-0 md:bg-transparent md:dark:bg-transparent md:translate-x-0`}
         >
           <ol className="flex justify-start mt-36 flex-col w-full h-full gap-8 md:flex-row md:gap-6 md:mt-0">
             {links.map((value, index) => {
