@@ -3,6 +3,7 @@ import "./globals.css";
 import { Open_Sans, Montserrat, Raleway } from "next/font/google";
 import SpaceBackground from "@/components/SpaceBackground";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { createSiteUrl } from "@/utils/createSiteUrl";
 
 const montserrat = Montserrat({
   weight: "variable",
@@ -22,16 +23,22 @@ const openSans = Open_Sans({
   subsets: ["latin"],
 });
 
+const url = createSiteUrl();
+
+const title = "Vincent Llanto | Software Developer";
+const description =
+  "I’m a software developer from the Philippines, specializing in web, mobile, and backend development. I create applications focused on solving real-world problems";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.BASE_PATH ?? "http://localhost:3000"),
-  title: "Vincent Llanto | Software Developer",
-  description:
-    "As a software developer, I don't just build applications. I focus on identifying software and real world problems, creating effective solutions, and delivering results that have a lasting impact. I am committed to continuous learning, exploring new challenges, and constantly seeking innovative ways to improve both code and user experience.",
+  metadataBase: url,
+  title,
+  description,
   openGraph: {
-    title: "Vincent Llanto | Software Developer",
-    description:
-      "As a software developer, I don't just build applications. I focus on identifying software and real world problems, creating effective solutions, and delivering results that have a lasting impact. I am committed to continuous learning, exploring new challenges, and constantly seeking innovative ways to improve both code and user experience.",
+    url,
+    title,
+    description,
     images: ["/metadata-pic.jpg"],
+    siteName: "Vincent Llanto - Developer's Portfolio",
   },
 
   icons: {

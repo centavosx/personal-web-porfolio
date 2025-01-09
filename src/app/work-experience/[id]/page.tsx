@@ -6,7 +6,7 @@ import { withContent } from "@/hoc/withContent";
 import { createContentMetadata } from "@/utils/createContentMetadata";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Supabase from "@/utils/supabase";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 import { notFound } from "next/navigation";
 
@@ -18,14 +18,12 @@ export const revalidate = 28800;
 
 export const dynamicParams = true;
 
-export async function generateMetadata(
-  { params }: WorkExperienceProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: WorkExperienceProps): Promise<Metadata> {
   const id = (await params).id;
-  const previousImages = ((await parent).openGraph?.images || []) as string[];
 
-  return createContentMetadata(id, "Work Experience", previousImages);
+  return createContentMetadata(id, "Work Experience", "work-experience");
 }
 
 const WorkExperience = withContent<{ params: Promise<{ id: string }> }>(

@@ -2,11 +2,12 @@ import { Metadata } from "next";
 import Supabase from "./supabase";
 import { getImageUrlFromExternal } from "./getImageFromExternal";
 import { notFound } from "next/navigation";
+import { createSiteUrl } from "./createSiteUrl";
 
 export async function createContentMetadata(
   id: string,
   prefix: string,
-  previousImages: string[] = []
+  endpointPrefix: string
 ): Promise<Metadata> {
   try {
     const {
@@ -30,8 +31,10 @@ export async function createContentMetadata(
         title: fullTitle,
         description: descriptionFirstItem,
         images: featured_image_url
-          ? [getImageUrlFromExternal(featured_image_url)]
-          : previousImages,
+          ? getImageUrlFromExternal(featured_image_url)
+          : undefined,
+        url: createSiteUrl(`/${endpointPrefix}/${id}`),
+        siteName: name,
       },
     };
   } catch {

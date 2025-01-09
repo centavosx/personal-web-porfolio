@@ -6,7 +6,7 @@ import { withContent } from "@/hoc/withContent";
 import { createContentMetadata } from "@/utils/createContentMetadata";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import Supabase from "@/utils/supabase";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const revalidate = 28800;
@@ -17,14 +17,11 @@ export type ProjectProps = {
   params: Promise<{ id: string }>;
 };
 
-export async function generateMetadata(
-  { params }: ProjectProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: ProjectProps): Promise<Metadata> {
   const id = (await params).id;
-  const previousImages = ((await parent).openGraph?.images || []) as string[];
-
-  return createContentMetadata(id, "Project", previousImages);
+  return createContentMetadata(id, "Project", "project");
 }
 
 const Project = withContent<ProjectProps>(
