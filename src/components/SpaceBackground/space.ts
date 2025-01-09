@@ -26,28 +26,12 @@ export class Space {
     return 1000;
   }
 
-  updateCursor(mouseX: number, mouseY: number) {
-    this.mouseX = mouseX;
-    this.mouseY = mouseY;
-  }
-
   moveAndDrawStars() {
     this.context.fillStyle = "#000000";
     this.context.fillRect(0, 0, this.width, this.height);
 
     for (const star of this.stars) {
-      star.move(
-        this.mouseX,
-        this.mouseY,
-        this.blackHoleRadiusMultiplier,
-        this.blackHoleCount >= this.maxStarCountInBlackhole,
-        () => {
-          this.blackHoleCount++;
-        },
-        () => {
-          this.blackHoleCount--;
-        }
-      );
+      star.move();
       star.draw();
     }
   }

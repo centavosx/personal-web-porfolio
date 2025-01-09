@@ -15,14 +15,9 @@ export class Star {
   speed: number;
   size: number;
 
-  orbitSpeed!: number;
-  orbitRadius!: number;
-
   r: number;
   g: number;
   b: number;
-
-  blackHoleRadius = 50;
 
   posX = 0;
   posY = 0;
@@ -33,15 +28,12 @@ export class Star {
   constructor(
     private context: CanvasRenderingContext2D,
     containerHeight: number,
-    containerWidth: number,
-    blackHoleRadius: number
+    containerWidth: number
   ) {
     this.alpha = Math.random() * 360 + 1;
 
     const color1 = colors[Math.floor(Math.random() * colors.length)];
     const color2 = colors[Math.floor(Math.random() * colors.length)];
-
-    this.blackHoleRadius = blackHoleRadius;
 
     this.r = Math.floor((color1.r + color2.r) / 2);
     this.g = Math.floor((color1.g + color2.g) / 2);
@@ -50,7 +42,7 @@ export class Star {
     this.speed = (Math.random() * 100 < 50 ? 1 : -1) * 0.02;
     this.size = Math.random() * 2 + 1;
 
-    this.updateContext(containerHeight, containerWidth, blackHoleRadius);
+    this.updateContext(containerHeight, containerWidth);
   }
 
   draw() {
@@ -65,58 +57,13 @@ export class Star {
     this.context.closePath();
   }
 
-  move(
-    mouseX: number,
-    mouseY: number,
-    blackHoleRadiusMultiplier = 1,
-    hasMeetMax = false,
-    onAddInBlackHole: () => void,
-    onRemoveFromBlackhole: () => void
-  ) {
+  move() {
     this.alpha += this.speed;
     this.posX = this.x + this.radX * Math.cos((this.alpha / 180) * Math.PI);
-    this.posY =
-      this.y +
-      blackHoleRadiusMultiplier +
-      this.radY * Math.sin((this.alpha / 180) * Math.PI);
-
-    const currentMouseY = mouseY + blackHoleRadiusMultiplier;
-
-    const mouseDrawX = this.posX - mouseX;
-    const mouseDrawY = this.posY - currentMouseY;
-
-    this.opacity = 0.4;
-
-    const radius = Math.sqrt(mouseDrawX * mouseDrawX + mouseDrawY * mouseDrawY);
-
-    const maxBlackholeRadius = this.blackHoleRadius * blackHoleRadiusMultiplier;
-
-    const hasMeetBlackHoleRequirememnts =
-      (hasMeetMax && this.isInBlackHole) || !hasMeetMax;
-
-    if (radius < maxBlackholeRadius * 2) {
-      this.opacity = 0;
-      if (!hasMeetBlackHoleRequirememnts) return;
-
-      const orbitRadius = this.orbitRadius * blackHoleRadiusMultiplier;
-      this.posX = mouseX + orbitRadius * Math.cos(this.alpha * 8);
-      this.posY = currentMouseY + orbitRadius * Math.sin(this.alpha * 8);
-      this.opacity = 1;
-      if (!this.isInBlackHole) onAddInBlackHole();
-      this.isInBlackHole = true;
-    }
-
-    if (this.isInBlackHole) onRemoveFromBlackhole();
-    this.isInBlackHole = false;
+    this.posY = this.y + this.radY * Math.sin((this.alpha / 180) * Math.PI);
   }
 
-  updateContext(
-    containerHeight: number,
-    containerWidth: number,
-    blackHoleRadius: number
-  ) {
-    this.updateBlackHoleRadius(blackHoleRadius);
-
+  updateContext(containerHeight: number, containerWidth: number) {
     this.width = containerWidth;
     this.height = containerHeight;
     this.x = containerWidth / 2;
@@ -124,13 +71,5 @@ export class Star {
 
     this.radX = 2 * Math.random() * this.x + 1;
     this.radY = 1.2 * Math.random() * this.y + 1;
-
-    this.orbitSpeed = 0.1 + Math.random() * 0.1;
-    this.orbitRadius =
-      this.blackHoleRadius - 1 + Math.random() * this.blackHoleRadius;
-  }
-
-  updateBlackHoleRadius(blackHoleRadius: number) {
-    this.blackHoleRadius = blackHoleRadius;
   }
 }

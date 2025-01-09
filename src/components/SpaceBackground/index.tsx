@@ -31,10 +31,6 @@ const SpaceBackground = () => {
       space.generateStars(currentHeight, currentWidth);
     };
 
-    const updateCursor = (e: MouseEvent) => {
-      space.updateCursor(e.clientX, e.clientY);
-    };
-
     const render = () => {
       space.moveAndDrawStars();
       animationFrameId = requestAnimationFrame(render);
@@ -44,10 +40,8 @@ const SpaceBackground = () => {
     render();
 
     window.addEventListener("resize", createStars);
-    window.addEventListener("mousemove", updateCursor);
     return () => {
       window.removeEventListener("resize", createStars);
-      window.removeEventListener("mousemove", updateCursor);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
