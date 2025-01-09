@@ -23,7 +23,7 @@ const openSans = Open_Sans({
   subsets: ["latin"],
 });
 
-const url = createSiteUrl();
+const url = createSiteUrl(undefined, true);
 
 const title = "Vincent Llanto | Software Developer";
 const description =

@@ -37,7 +37,8 @@ export async function createContentMetadata(
         siteName: name,
       },
     };
-  } catch {
+  } catch (e) {
+    console.log(e);
     notFound();
   }
 }
