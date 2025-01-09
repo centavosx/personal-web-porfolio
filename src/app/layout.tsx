@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Open_Sans, Montserrat, Raleway } from "next/font/google";
 import SpaceBackground from "@/components/SpaceBackground";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const montserrat = Montserrat({
   weight: "variable",
@@ -101,6 +102,7 @@ export default function RootLayout({
       >
         <main className="overflow-hidden relative bg-black">
           <SpaceBackground />
+          <SpeedInsights />
           {children}
         </main>
       </body>
