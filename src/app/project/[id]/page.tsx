@@ -21,7 +21,7 @@ export async function generateMetadata({
   params,
 }: ProjectProps): Promise<Metadata> {
   const id = (await params).id;
-  return createContentMetadata(id, "Project", "project");
+  return createContentMetadata(id, "Project", "project", true);
 }
 
 const Project = withContent<ProjectProps>(

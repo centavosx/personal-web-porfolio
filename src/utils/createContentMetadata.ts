@@ -8,7 +8,7 @@ export async function createContentMetadata(
   id: string,
   prefix: string,
   endpointPrefix: string,
-  shouldFollow?: boolean
+  withRobotIndex?: boolean
 ): Promise<Metadata> {
   try {
     const {
@@ -37,7 +37,7 @@ export async function createContentMetadata(
         url: createSiteUrl(`/${endpointPrefix}/${id}`),
         siteName: name,
       },
-      robots: shouldFollow ? "index, follow, noimageindex" : undefined,
+      robots: withRobotIndex ? "index, follow, noimageindex" : undefined,
     };
   } catch (e) {
     console.log(e);
