@@ -68,7 +68,7 @@ const Footer = async ({ isDark }: FooterProps) => {
             {!!address.length && (
               <div className="flex flex-col gap-2">
                 <Text className="font-montserrat" size="xs">
-                  Donate a coffee.
+                  Buy me a coffee.
                 </Text>
                 <div className="flex flex-col gap-4">
                   {address.map((value, index) => {
