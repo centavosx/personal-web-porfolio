@@ -7,7 +7,8 @@ import { createSiteUrl } from "./createSiteUrl";
 export async function createContentMetadata(
   id: string,
   prefix: string,
-  endpointPrefix: string
+  endpointPrefix: string,
+  shouldFollow?: boolean
 ): Promise<Metadata> {
   try {
     const {
@@ -36,6 +37,7 @@ export async function createContentMetadata(
         url: createSiteUrl(`/${endpointPrefix}/${id}`),
         siteName: name,
       },
+      robots: shouldFollow ? "index, follow, noimageindex" : undefined,
     };
   } catch (e) {
     console.log(e);
