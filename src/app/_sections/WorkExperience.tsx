@@ -111,6 +111,7 @@ const WorkExperience = ({ data }: WorkExperienceProps) => {
             className="w-20"
             variant="outlined"
             href={`/work-experience/${id}`}
+            aria-label={`Read more about ${name}`}
           >
             More
           </Button>

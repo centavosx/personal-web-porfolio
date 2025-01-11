@@ -44,7 +44,11 @@ const Projects = ({ data }: ProjectsProps) => {
                 delay={600}
                 animate="right"
               >
-                <Button variant="outlined" href={`/project/${project.id}`}>
+                <Button
+                  variant="outlined"
+                  href={`/project/${project.id}`}
+                  aria-label={`Read more about ${project.name}`}
+                >
                   More
                 </Button>
               </InView.Container>

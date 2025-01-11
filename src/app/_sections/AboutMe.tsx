@@ -15,7 +15,7 @@ const AboutMe = async ({ shortDescription }: AboutMeProps) => {
         id="about"
         title="About Me"
         description={shortDescription}
-        moreButton={{ href: "/about" }}
+        moreButton={{ href: "/about", "aria-label": "Read more About Me" }}
       />
       <Section title="What I offer?">
         <InView.Container
