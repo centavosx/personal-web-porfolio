@@ -241,7 +241,12 @@ export const withContent = <P extends Record<string, unknown>>(
 
       if (href)
         return (
-          <a key={key} href={href} target="_blank">
+          <a
+            key={key}
+            href={href}
+            target="_blank"
+            className={combinedAlignClasses}
+          >
             {childRender}
           </a>
         );

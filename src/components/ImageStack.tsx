@@ -67,7 +67,7 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
     if (intervalIdRef.current !== null) clearInterval(intervalIdRef.current);
     const currentOrderedEls = orderedEls.current;
 
-    if (currentOrderedEls.length < 1) return;
+    if (currentOrderedEls.length <= 1) return;
 
     intervalIdRef.current = setInterval(() => {
       const index = imageEls.current.findIndex((value) =>
@@ -79,6 +79,9 @@ const ImageStack = ({ srcs, height, width }: ImageStackProps) => {
 
   const handleClick = (index: number) => () => {
     startImageLoop();
+
+    if (orderedEls.current.length <= 1) return;
+    console.log(srcs.length);
     handleChangeIndex(index);
   };
 
