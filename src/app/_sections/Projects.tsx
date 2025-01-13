@@ -3,6 +3,9 @@ import { Content } from "@/types/supabase";
 import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
 import InView from "@/components/InView";
 import Button from "@/components/Button";
+import Text from "@/components/Text";
+
+const ANIMATION_DELAY = 200;
 
 export type ProjectsProps = {
   data: Content[];
@@ -32,16 +35,22 @@ const Projects = ({ data }: ProjectsProps) => {
                 className="font-bold font-montserrat tracking-widest"
                 size="xl"
                 animate="top"
-                delay={300}
+                delay={ANIMATION_DELAY}
               >
                 {project.name}
               </InView.Text>
-              <InView.Text delay={300} animate="bottom">
-                {project.description}
-              </InView.Text>
+              <InView.Container
+                className="flex flex-col flex-1 gap-4"
+                delay={ANIMATION_DELAY}
+                animate="bottom"
+              >
+                {project.description?.map((description, index) => (
+                  <Text key={`description_${index}`}>{description}</Text>
+                ))}
+              </InView.Container>
               <InView.Container
                 className="self-end max-w-[120px]"
-                delay={600}
+                delay={ANIMATION_DELAY}
                 animate="right"
               >
                 <Button
