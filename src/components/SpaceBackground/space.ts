@@ -4,9 +4,19 @@ export class Space {
   width!: number;
   height!: number;
 
+  private _pause = false;
+
   stars: Star[] = [];
 
   constructor(public context: CanvasRenderingContext2D) {}
+
+  pause() {
+    this._pause = true;
+  }
+
+  resume() {
+    this._pause = false;
+  }
 
   getMaxDistance() {
     if (this.width < 480) return 30;
@@ -21,6 +31,8 @@ export class Space {
   }
 
   moveAndDrawStars() {
+    if (this._pause) return;
+
     this.context.fillStyle = "#000000";
     this.context.fillRect(0, 0, this.width, this.height);
 

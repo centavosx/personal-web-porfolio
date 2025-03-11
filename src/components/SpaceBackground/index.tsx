@@ -31,6 +31,17 @@ const SpaceBackground = () => {
       space.generateStars(currentHeight, currentWidth);
     };
 
+    let timeoutId: NodeJS.Timeout;
+
+    const debouncedCreateStars = () => {
+      space.pause();
+      createStars();
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        space.resume();
+      }, 300);
+    };
+
     const render = () => {
       space.moveAndDrawStars();
       animationFrameId = requestAnimationFrame(render);
@@ -39,10 +50,11 @@ const SpaceBackground = () => {
     createStars();
     render();
 
-    window.addEventListener("resize", createStars);
+    window.addEventListener("resize", debouncedCreateStars);
     return () => {
-      window.removeEventListener("resize", createStars);
+      window.removeEventListener("resize", debouncedCreateStars);
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(timeoutId);
     };
   }, []);
 

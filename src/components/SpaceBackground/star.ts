@@ -51,8 +51,6 @@ export class Star {
     this.context.beginPath();
     this.context.fillStyle = color;
     this.context.arc(this.posX, this.posY, this.size, 0, Math.PI * 2, false);
-    this.context.shadowColor = color;
-    this.context.shadowBlur = 1;
     this.context.fill();
     this.context.closePath();
   }
