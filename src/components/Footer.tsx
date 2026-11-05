@@ -1,7 +1,7 @@
 import Text from "@/components/Text";
 import Image from "next/image";
-import MailIcon from "../../../public/svg/mail.svg";
-import LinkedInCharIcon from "../../../public/svg/linkedin-character.svg";
+import MailIcon from "../../public/svg/mail.svg";
+import LinkedInCharIcon from "../../public/svg/linkedin-character.svg";
 import Supabase from "@/utils/supabase";
 import InView from "@/components/InView";
 

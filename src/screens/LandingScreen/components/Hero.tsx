@@ -2,10 +2,10 @@
 
 import Section from "@/components/Section";
 import { Link } from "@/types/supabase";
-import CodewarsIcon from "../../../public/svg/codewars.svg";
-import EmailIcon from "../../../public/svg/email.svg";
-import GithubIcon from "../../../public/svg/github.svg";
-import LinkedInIcon from "../../../public/svg/linkedin.svg";
+import CodewarsIcon from "../../../../public/svg/codewars.svg";
+import EmailIcon from "../../../../public/svg/email.svg";
+import GithubIcon from "../../../../public/svg/github.svg";
+import LinkedInIcon from "../../../../public/svg/linkedin.svg";
 import InView from "@/components/InView";
 
 const icons = {
