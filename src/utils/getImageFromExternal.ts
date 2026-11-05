@@ -6,6 +6,11 @@ export const getImageUrlFromExternal = (endpoint: string) => {
   return `${normalizedBaseUrl}/${normalizedPath}`;
 };
 
-/** Paths under /svg and /image ship with the site, everything else is remote. */
+/**
+ * Full URLs (R2 uploads) are used as they are, paths under /svg and /image ship
+ * with the site, and any other path is relative to NEXT_PUBLIC_IMAGE_URL.
+ */
 export const getContentImageUrl = (path: string) =>
-  /^\/(svg|image)\//.test(path) ? path : getImageUrlFromExternal(path);
+  /^https?:\/\//.test(path) || /^\/(svg|image)\//.test(path)
+    ? path
+    : getImageUrlFromExternal(path);

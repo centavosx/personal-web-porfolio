@@ -38,7 +38,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# local database content, generated from the live site
-/supabase/migrations/20261105000001_seed.sql
-/supabase/migrations/20261105000003_content_conversion.sql

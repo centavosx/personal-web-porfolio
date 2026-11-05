@@ -5,8 +5,10 @@
 # Supabase project and R2 bucket.
 #
 # Config files are built into the images instead of bind mounted, so this works
-# without giving Docker access to the Documents folder. After adding a migration:
-#   docker compose up -d --build
+# without giving Docker access to the Documents folder.
+#
+# Data lives in the named volumes below. `docker compose down -v` deletes it, and
+# a new database volume starts with no site tables.
 name: portfolio-local
 
 x-postgres-password: &postgres-password local-dev-postgres-password
@@ -41,24 +43,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 20
-
-  # Applies supabase/migrations and supabase/seed.sql once each, then exits.
-  db-migrate:
-    build:
-      context: ./supabase
-      additional_contexts:
-        scripts: ./docker/supabase
-      dockerfile_inline: |
-        FROM supabase/postgres:17.6.1.136
-        COPY --from=scripts migrate.sh /migrate.sh
-        COPY . /supabase
-    restart: "no"
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      PGPASSWORD: *postgres-password
-    entrypoint: ["sh", "/migrate.sh"]
 
   auth:
     image: supabase/gotrue:v2.197.0
