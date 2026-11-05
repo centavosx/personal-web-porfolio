@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: ["radix-ui"],
+  },
+  async redirects() {
+    return [{ source: "/about", destination: "/", permanent: true }];
+  },
   images: {
     remotePatterns: [
       {

@@ -5,3 +5,7 @@ export const getImageUrlFromExternal = (endpoint: string) => {
 
   return `${normalizedBaseUrl}/${normalizedPath}`;
 };
+
+/** Paths under /svg and /image ship with the site, everything else is remote. */
+export const getContentImageUrl = (path: string) =>
+  /^\/(svg|image)\//.test(path) ? path : getImageUrlFromExternal(path);
