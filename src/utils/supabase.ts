@@ -2,9 +2,6 @@ import { Content, Database } from "@/types/supabase";
 import { createClient, PostgrestSingleResponse } from "@supabase/supabase-js";
 
 class Supabase {
-  static get currentId() {
-    return (process.env.ABOUT_ID as string) || "";
-  }
   static get client() {
     return createClient<Database>(
       process.env.SUPABASE_URL!,
@@ -24,33 +21,29 @@ class Supabase {
   static get content() {
     return Supabase.client
       .from("content")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
+      .select("*");
   }
 
   static get service() {
     return Supabase.client
       .from("service")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
+      .select("*");
   }
 
   static get technology() {
     return Supabase.client
       .from("technology")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
+      .select("*");
   }
 
   static get about() {
-    return Supabase.client.from("about").select("*").eq("id", Supabase.currentId);
+    return Supabase.client.from("about").select("*").order("created_at").limit(1);
   }
 
   static get link() {
     return Supabase.client
       .from("link")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
+      .select("*");
   }
 
 
@@ -103,7 +96,7 @@ class Supabase {
 
   static async getAbout() {
     const { data } = Supabase.handleError(
-      await Supabase.about.select("*").single(),
+      await Supabase.about.single(),
       "About should be available"
     );
 
