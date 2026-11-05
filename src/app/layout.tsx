@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Open_Sans, Montserrat, Raleway } from "next/font/google";
+import { Open_Sans, Montserrat, Raleway, Geist } from "next/font/google";
 import SpaceBackground from "@/components/SpaceBackground";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { createSiteUrl } from "@/utils/createSiteUrl";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 const montserrat = Montserrat({
   weight: "variable",
@@ -103,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body
         className={`${montserrat.variable} ${raleway.variable} ${openSans.variable}  antialiased`}
       >

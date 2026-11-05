@@ -36,7 +36,7 @@ export const WorkExperienceDetailsScreen =
                 height={51}
                 alt="company-logo"
                 animate="right"
-                inViewClassName="opacity-20"
+                inViewClassName="opacity-20!"
               />
             )}
             <InView.Text

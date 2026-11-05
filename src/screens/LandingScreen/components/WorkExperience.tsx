@@ -90,7 +90,7 @@ const WorkExperience = ({ data }: WorkExperienceProps) => {
         <InView.Container
           animate="top"
           className="absolute md:right-[8rem] top-[35%] -z-10 self-center"
-          inViewClassName="opacity-20"
+          inViewClassName="opacity-20!"
         >
           <Image
             className="scale-[4.5]"
