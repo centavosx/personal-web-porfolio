@@ -32,4 +32,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 ## Deploy
 Deploy with `docker-compose.deploy.yaml`, which builds the `Dockerfile` and joins the `dokploy-network` network. The app listens on port 3000.
 
-Put these in `.env` next to the compose file: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_IMAGE_URL`, `R2_PUBLIC_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY` and `REVALIDATE_SECRET`. The build reads the same file and generates pages from the database, so it must be able to reach Supabase. Rebuild after changing `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_IMAGE_URL` or `R2_PUBLIC_URL`.
+Put these in `.env` next to the compose file: `NEXT_PUBLIC_SITE_URL`, `R2_PUBLIC_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY` and `REVALIDATE_SECRET`. The build reads the same file and generates pages from the database, so it must be able to reach Supabase. Rebuild after changing `NEXT_PUBLIC_SITE_URL` or `R2_PUBLIC_URL`.

@@ -13,13 +13,6 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "ik.imagekit.io",
-        port: "",
-        pathname: "/centavosx/**",
-        search: "",
-      },
       ...(r2PublicUrl
         ? [
             {

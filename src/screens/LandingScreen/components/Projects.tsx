@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Content } from "@/types/supabase";
-import { getContentImageUrl } from "@/utils/getImageFromExternal";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,7 +48,7 @@ const Projects = ({ data }: ProjectsProps) => {
                   )}
                 >
                   <Image
-                    src={getContentImageUrl(project.featured_image_url!)}
+                    src={project.featured_image_url!}
                     alt={`${project.name} preview`}
                     fill
                     sizes="(min-width: 768px) 560px, 100vw"

@@ -2,7 +2,6 @@ import SocialLinks from "@/components/SocialLinks";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Content, Link as SiteLink } from "@/types/supabase";
-import { getContentImageUrl } from "@/utils/getImageFromExternal";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -58,7 +57,7 @@ const Hero = ({ intro, links, projects }: HeroProps) => {
             >
               <div className="relative aspect-video">
                 <Image
-                  src={getContentImageUrl(project.featured_image_url!)}
+                  src={project.featured_image_url!}
                   alt=""
                   fill
                   sizes="420px"

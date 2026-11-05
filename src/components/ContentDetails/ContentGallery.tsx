@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/carousel";
 import { ContentGalleryItem } from "@/types/content";
 import { cn } from "@/lib/utils";
-import { getContentImageUrl } from "@/utils/getImageFromExternal";
 import Image from "next/image";
 
 export type ContentGalleryProps = {
@@ -35,7 +34,7 @@ const ContentGallery = ({ item }: ContentGalleryProps) => {
                 )}
               >
                 <Image
-                  src={getContentImageUrl(image)}
+                  src={image}
                   alt={title ?? "Project screenshot"}
                   fill
                   sizes={isPortrait ? "(min-width: 1024px) 220px, 50vw" : "(min-width: 768px) 640px, 100vw"}

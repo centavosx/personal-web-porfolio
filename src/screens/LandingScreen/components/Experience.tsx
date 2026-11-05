@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
 import { Content } from "@/types/supabase";
-import { getContentImageUrl } from "@/utils/getImageFromExternal";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,7 +20,7 @@ const Experience = ({ data }: ExperienceProps) => (
               {!!item.icon_url && (
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-lg border bg-neutral-900 p-1.5">
                   <Image
-                    src={getContentImageUrl(item.icon_url)}
+                    src={item.icon_url}
                     width={36}
                     height={36}
                     alt=""

@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Content } from "@/types/supabase";
-import { getContentImageUrl } from "@/utils/getImageFromExternal";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -44,7 +43,7 @@ const ContentDetails = ({ content, backHref, backLabel }: ContentDetailsProps) =
           {!!icon_url && !featured_image_url && (
             <span className="flex size-14 items-center justify-center rounded-xl border bg-neutral-900 p-2">
               <Image
-                src={getContentImageUrl(icon_url)}
+                src={icon_url}
                 width={40}
                 height={40}
                 alt=""
@@ -64,7 +63,7 @@ const ContentDetails = ({ content, backHref, backLabel }: ContentDetailsProps) =
         {!!featured_image_url && (
           <div className="relative aspect-video overflow-hidden rounded-xl border bg-muted">
             <Image
-              src={getContentImageUrl(featured_image_url)}
+              src={featured_image_url}
               alt={`${name} preview`}
               fill
               priority
