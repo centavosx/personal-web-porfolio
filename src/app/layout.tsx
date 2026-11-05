@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Geist } from "next/font/google";
 import ThemeProvider from "@/components/ThemeProvider";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { createSiteUrl } from "@/utils/createSiteUrl";
 import { cn } from "@/lib/utils";
 
@@ -94,7 +93,6 @@ export default function RootLayout({
     <html lang="en" className={cn("font-sans", geist.variable)} suppressHydrationWarning>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
-        <SpeedInsights />
       </body>
     </html>
   );
