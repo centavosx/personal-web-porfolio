@@ -1,4 +1,4 @@
-import { ContentData } from "./content";
+import { ContentSection } from "./content";
 import { PartialExcept } from "./generics";
 
 export type Json =
@@ -11,7 +11,9 @@ export type Json =
 
 export type Content = {
   featured_image_url: string | null;
-  content: ContentData | ContentData[] | null;
+  content: Json | null;
+  sections: ContentSection[] | null;
+  sort_order: number;
   created_at: string;
   description: string[] | null;
   date: string | null;
@@ -28,6 +30,7 @@ export type Content = {
 
 export type Service = {
   id: string;
+  sort_order: number;
   name: string;
   description: string;
   icon_url: string;
@@ -38,6 +41,7 @@ export type Service = {
 
 export type Technology = {
   id: string;
+  sort_order: number;
   name: string;
   icon_url: string;
   link: string | null;
@@ -69,6 +73,7 @@ export type Address = {
 
 export type Link = {
   about_id: string;
+  sort_order: number;
   link: string;
   created_at: string;
   id: string;

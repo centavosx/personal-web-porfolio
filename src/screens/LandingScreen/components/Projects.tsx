@@ -1,90 +1,90 @@
-import Section from "@/components/Section";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { Content } from "@/types/supabase";
-import { getImageUrlFromExternal } from "@/utils/getImageFromExternal";
-import InView from "@/components/InView";
-import Button from "@/components/Button";
-import Text from "@/components/Text";
+import { getContentImageUrl } from "@/utils/getImageFromExternal";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import SectionHeading from "./SectionHeading";
 
-const ANIMATION_DELAY = 200;
+const MAX_TECH_BADGES = 6;
+
+const statusLabels: Record<NonNullable<Content["status"]>, string> = {
+  pending: "In progress",
+  completed: "Completed",
+  hold: "On hold",
+  dropped: "Dropped",
+};
+
+const getTechNames = ({ sections }: Content) =>
+  (sections ?? [])
+    .flatMap((section) => section.stack ?? [])
+    .flatMap((group) => group.items)
+    .map((item) => item.name)
+    .slice(0, MAX_TECH_BADGES);
 
 export type ProjectsProps = {
   data: Content[];
 };
+
 const Projects = ({ data }: ProjectsProps) => {
-  const filteredFeaturedProjects = data.filter(
-    (project) => !!project.featured_image_url
-  );
+  const projects = data.filter((project) => !!project.featured_image_url);
 
   return (
-    <Section id="projects" title="Projects" isTransparentBg isDark>
-      <div className="flex flex-col gap-16 mt-12">
-        {filteredFeaturedProjects.map((project, index) => (
-          <div
-            key={`${project.name}_${index}`}
-            className="flex flex-col gap-16 items-center lg:flex-row lg:gap-24"
-          >
-            <InView.Image
-              className="h-full w-full object-cover object-center rounded-xl max-w-full max-h-full self-center md:max-w-96 md:max-f-96"
-              src={getImageUrlFromExternal(project.featured_image_url || "")}
-              width={384}
-              height={384}
-              alt={`${project.name} featured image`}
-            />
-            <div className="flex flex-col flex-1 gap-8">
-              <InView.Text
-                className="font-bold font-montserrat tracking-widest"
-                size="xl"
-                animate="top"
-                delay={ANIMATION_DELAY}
-              >
-                {project.name}
-              </InView.Text>
-              <InView.Container
-                className="flex flex-col flex-1 gap-4"
-                delay={ANIMATION_DELAY}
-                animate="bottom"
-              >
-                {project.description?.map((description, index) => (
-                  <Text key={`description_${index}`}>{description}</Text>
-                ))}
-              </InView.Container>
-              <InView.Container
-                className="self-end max-w-[120px]"
-                delay={ANIMATION_DELAY}
-                animate="right"
-              >
-                <Button
-                  variant="outlined"
+    <section id="projects" className="scroll-mt-14 border-b">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-20 sm:px-6">
+        <SectionHeading title="Projects" description="Products I've designed, built and shipped." />
+        <div className="flex flex-col gap-8">
+          {projects.map((project, index) => (
+            <Card key={project.id} className="group overflow-hidden p-0">
+              <div className="grid md:grid-cols-2">
+                <Link
                   href={`/project/${project.id}`}
-                  aria-label={`Read more about ${project.name}`}
+                  aria-label={project.name}
+                  className={cn(
+                    "relative aspect-video overflow-hidden bg-muted md:aspect-auto md:min-h-80",
+                    index % 2 === 1 && "md:order-last"
+                  )}
                 >
-                  More
-                </Button>
-              </InView.Container>
-            </div>
-          </div>
-        ))}
+                  <Image
+                    src={getContentImageUrl(project.featured_image_url!)}
+                    alt={`${project.name} preview`}
+                    fill
+                    sizes="(min-width: 768px) 560px, 100vw"
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                </Link>
+                <div className="flex flex-col items-start gap-4 p-6 md:p-8">
+                  <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                    {!!project.status && <Badge variant="secondary">{statusLabels[project.status]}</Badge>}
+                    {!!project.date && <span>{project.date}</span>}
+                  </div>
+                  <h3 className="text-2xl font-semibold tracking-tight">{project.name}</h3>
+                  {!!project.description?.[0] && (
+                    <p className="line-clamp-4 leading-7 text-muted-foreground">{project.description[0]}</p>
+                  )}
+                  <div className="flex flex-wrap gap-1.5">
+                    {getTechNames(project).map((name) => (
+                      <Badge key={name} variant="outline">
+                        {name}
+                      </Badge>
+                    ))}
+                  </div>
+                  <Button variant="outline" className="mt-auto" asChild>
+                    <Link href={`/project/${project.id}`} aria-label={`View ${project.name}`}>
+                      View project
+                      <ArrowRight />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
-      {/* <InView.Container animate="bottom">
-        <EmblaCarousel
-          slides={filteredImages.map((value, index) => ({
-            name: value.name,
-            component: (
-              <Image
-                key={`${value.name}${index}`}
-                className="h-full w-full object-cover object-top"
-                src={getImageUrlFromExternal(value.featured_image_url || "")}
-                width={1920}
-                height={544}
-                alt={`${value.name} featured image`}
-              />
-            ),
-            href: `/project/${value.id}`,
-          }))}
-          options={OPTIONS}
-        />
-      </InView.Container> */}
-    </Section>
+    </section>
   );
 };
 
