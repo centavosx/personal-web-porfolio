@@ -1,0 +1,9 @@
+.git
+.next
+node_modules
+.env*
+!.env
+.DS_Store
+.yarn/install-state.gz
+*.tsbuildinfo
+docker-compose*
