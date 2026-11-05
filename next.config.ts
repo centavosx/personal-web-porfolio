@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
+// CMS uploads are served from the R2 public URL.
+const r2PublicUrl = process.env.R2_PUBLIC_URL ? new URL(process.env.R2_PUBLIC_URL) : null;
+
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: ["radix-ui"],
+  },
+  async redirects() {
+    return [{ source: "/about", destination: "/", permanent: true }];
+  },
   images: {
     remotePatterns: [
       {
@@ -10,6 +19,16 @@ const nextConfig: NextConfig = {
         pathname: "/centavosx/**",
         search: "",
       },
+      ...(r2PublicUrl
+        ? [
+            {
+              protocol: r2PublicUrl.protocol.replace(":", "") as "http" | "https",
+              hostname: r2PublicUrl.hostname,
+              port: r2PublicUrl.port,
+              pathname: `${r2PublicUrl.pathname.replace(/\/$/, "")}/**`,
+            },
+          ]
+        : []),
     ],
   },
   webpack(config) {
