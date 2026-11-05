@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 const r2PublicUrl = process.env.R2_PUBLIC_URL ? new URL(process.env.R2_PUBLIC_URL) : null;
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   experimental: {
     optimizePackageImports: ["radix-ui"],
   },
