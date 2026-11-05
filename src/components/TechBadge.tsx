@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { getContentImageUrl } from "@/utils/getImageFromExternal";
 import Image from "next/image";
 
 export type TechBadgeProps = {
@@ -13,7 +12,7 @@ const TechBadge = ({ name, icon, href }: TechBadgeProps) => {
     <>
       <span className="flex size-5 items-center justify-center rounded-sm bg-white p-0.5">
         <Image
-          src={getContentImageUrl(icon)}
+          src={icon}
           width={16}
           height={16}
           alt=""
