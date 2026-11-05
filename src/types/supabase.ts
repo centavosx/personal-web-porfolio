@@ -187,6 +187,12 @@ export type Database = {
           }
         ];
       };
+      admin: {
+        Row: { user_id: string; created_at: string };
+        Insert: { user_id: string; created_at?: string };
+        Update: { user_id?: string; created_at?: string };
+        Relationships: [];
+      };
       about: {
         Row: About;
         Insert: PartialExcept<
@@ -201,7 +207,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      is_admin: {
+        Args: Record<string, never>;
+        Returns: boolean;
+      };
     };
     Enums: {
       content_status_enum: "pending" | "completed" | "hold" | "dropped";
