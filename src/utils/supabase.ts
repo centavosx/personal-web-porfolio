@@ -1,6 +1,5 @@
 import { Content, Database } from "@/types/supabase";
 import { createClient, PostgrestSingleResponse } from "@supabase/supabase-js";
-import { error } from "console";
 
 class Supabase {
   static get currentId() {
@@ -17,7 +16,7 @@ class Supabase {
     result: PostgrestSingleResponse<T>,
     emptyError?: string
   ) {
-    if (result.error) throw error;
+    if (result.error) throw result.error;
     if (!!emptyError && !result.data) throw new Error(emptyError);
     return result;
   }
@@ -44,7 +43,7 @@ class Supabase {
   }
 
   static get about() {
-    return Supabase.client.from("about").select("*");
+    return Supabase.client.from("about").select("*").eq("id", Supabase.currentId);
   }
 
   static get link() {
@@ -54,12 +53,6 @@ class Supabase {
       .eq("about_id", Supabase.currentId);
   }
 
-  static get address() {
-    return Supabase.client
-      .from("address")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
-  }
 
   static async getContentById(id: string) {
     const { data } = Supabase.handleError(
@@ -72,7 +65,9 @@ class Supabase {
 
   static async getContents() {
     const { data } = Supabase.handleError(
-      await Supabase.content.eq("is_featured", true)
+      await Supabase.content.eq("is_featured", true).order("sort_order", {
+        ascending: true,
+      })
     );
 
     return data;
@@ -88,7 +83,7 @@ class Supabase {
 
   static async getServices() {
     const { data } = Supabase.handleError(
-      await Supabase.service.order("created_at", {
+      await Supabase.service.order("sort_order", {
         ascending: true,
       })
     );
@@ -98,7 +93,7 @@ class Supabase {
 
   static async getCoreTech() {
     const { data } = Supabase.handleError(
-      await Supabase.technology.eq("is_core", true).order("created_at", {
+      await Supabase.technology.eq("is_core", true).order("sort_order", {
         ascending: true,
       })
     );
@@ -116,16 +111,13 @@ class Supabase {
   }
 
   static async getLinks() {
-    const { data } = Supabase.handleError(await Supabase.link);
+    const { data } = Supabase.handleError(
+      await Supabase.link.order("sort_order", { ascending: true })
+    );
 
     return data;
   }
 
-  static async getAddresses() {
-    const { data } = Supabase.handleError(await Supabase.address);
-
-    return data;
-  }
 }
 
 export default Supabase;
