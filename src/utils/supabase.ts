@@ -1,11 +1,7 @@
 import { Content, Database } from "@/types/supabase";
 import { createClient, PostgrestSingleResponse } from "@supabase/supabase-js";
-import { error } from "console";
 
 class Supabase {
-  static get currentId() {
-    return (process.env.ABOUT_ID as string) || "";
-  }
   static get client() {
     return createClient<Database>(
       process.env.SUPABASE_URL!,
@@ -17,7 +13,7 @@ class Supabase {
     result: PostgrestSingleResponse<T>,
     emptyError?: string
   ) {
-    if (result.error) throw error;
+    if (result.error) throw result.error;
     if (!!emptyError && !result.data) throw new Error(emptyError);
     return result;
   }
@@ -25,41 +21,31 @@ class Supabase {
   static get content() {
     return Supabase.client
       .from("content")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
+      .select("*");
   }
 
   static get service() {
     return Supabase.client
       .from("service")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
+      .select("*");
   }
 
   static get technology() {
     return Supabase.client
       .from("technology")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
+      .select("*");
   }
 
   static get about() {
-    return Supabase.client.from("about").select("*");
+    return Supabase.client.from("about").select("*").order("created_at").limit(1);
   }
 
   static get link() {
     return Supabase.client
       .from("link")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
+      .select("*");
   }
 
-  static get address() {
-    return Supabase.client
-      .from("address")
-      .select("*")
-      .eq("about_id", Supabase.currentId);
-  }
 
   static async getContentById(id: string) {
     const { data } = Supabase.handleError(
@@ -72,7 +58,9 @@ class Supabase {
 
   static async getContents() {
     const { data } = Supabase.handleError(
-      await Supabase.content.eq("is_featured", true)
+      await Supabase.content.eq("is_featured", true).order("sort_order", {
+        ascending: true,
+      })
     );
 
     return data;
@@ -88,7 +76,7 @@ class Supabase {
 
   static async getServices() {
     const { data } = Supabase.handleError(
-      await Supabase.service.order("created_at", {
+      await Supabase.service.order("sort_order", {
         ascending: true,
       })
     );
@@ -98,7 +86,7 @@ class Supabase {
 
   static async getCoreTech() {
     const { data } = Supabase.handleError(
-      await Supabase.technology.eq("is_core", true).order("created_at", {
+      await Supabase.technology.eq("is_core", true).order("sort_order", {
         ascending: true,
       })
     );
@@ -108,7 +96,7 @@ class Supabase {
 
   static async getAbout() {
     const { data } = Supabase.handleError(
-      await Supabase.about.select("*").single(),
+      await Supabase.about.single(),
       "About should be available"
     );
 
@@ -116,16 +104,13 @@ class Supabase {
   }
 
   static async getLinks() {
-    const { data } = Supabase.handleError(await Supabase.link);
+    const { data } = Supabase.handleError(
+      await Supabase.link.order("sort_order", { ascending: true })
+    );
 
     return data;
   }
 
-  static async getAddresses() {
-    const { data } = Supabase.handleError(await Supabase.address);
-
-    return data;
-  }
 }
 
 export default Supabase;

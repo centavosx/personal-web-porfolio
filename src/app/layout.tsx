@@ -1,26 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Open_Sans, Montserrat, Raleway } from "next/font/google";
-import SpaceBackground from "@/components/SpaceBackground";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Geist } from "next/font/google";
+import ThemeProvider from "@/components/ThemeProvider";
 import { createSiteUrl } from "@/utils/createSiteUrl";
+import { cn } from "@/lib/utils";
 
-const montserrat = Montserrat({
-  weight: "variable",
-  variable: "--montserrat",
+const geist = Geist({
   subsets: ["latin"],
-});
-
-const raleway = Raleway({
-  weight: "variable",
-  variable: "--raleway",
-  subsets: ["latin"],
-});
-
-const openSans = Open_Sans({
-  weight: "variable",
-  variable: "--open-sans",
-  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 const url = createSiteUrl(undefined, true);
@@ -103,15 +90,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${montserrat.variable} ${raleway.variable} ${openSans.variable}  antialiased`}
-      >
-        <main className="overflow-hidden relative bg-black">
-          <SpaceBackground />
-          <SpeedInsights />
-          {children}
-        </main>
+    <html lang="en" className={cn("font-sans", geist.variable)} suppressHydrationWarning>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

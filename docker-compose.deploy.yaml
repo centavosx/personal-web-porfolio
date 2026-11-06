@@ -1,0 +1,16 @@
+services:
+  personal-web-portfolio:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - dokploy-network
+    env_file:
+      - .env
+    ports:
+      - 3000
+
+networks:
+  dokploy-network:
+    external: true
